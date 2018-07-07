@@ -1,0 +1,17 @@
+{
+  "name": "async-classifier",
+  "version": "1.0.0",
+  "description": "classifier that uses brainjs async training function",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "brain.js": "^1.2.2",
+    "jsonfile": "^4.0.0",
+    "moment": "^2.22.2",
+    "natural": "^0.6.1"
+  }
+}
