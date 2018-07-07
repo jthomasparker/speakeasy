@@ -23,16 +23,10 @@ let classifierFive = new AsyncClassifier()
 
 const getRandom = (min, max) => Math.floor(Math.random() * (max - min) + min)
 
-/*const timer = () => {
-    let elapsedTime = 0;
-    let id = setInterval
-}*/
 
 const train = (start, end) => {
 
     iteration++
-  //  console.log("Iteration: ", iteration)
-  //  console.log(`Adding defintions ${start} - ${end} (${end-start} total)`)
     console.log("Classifier: adding defs")
     for(let i = start; i < end; i++){
         if(!classTrainedIds.includes(sentimentData[i].id)){
@@ -100,11 +94,8 @@ const getAccuracy = (thisClassifier, avgErrArr) => {
 }
 
 const getStatus = (thisClassifier, avgErrArr, start, end, trainingRes) => {
-  //  if(iteration < 1) return "Not Ready"
-  //  trainingIterations =+ trainingRes.iterations;
-  //  trainingErr = (trainingErr += trainingRes.error) / iteration
+
     let data = {
-    //    lastTrainingBatch: `Records ${start} (id: ${sentimentData[start].id}) - ${end} (id: ${sentimentData[end].id}) -> (${end-start} total records)`,
         classifierStats: thisClassifier.getStats(),
         testResults: getAccuracy(thisClassifier, avgErrArr)
     }
