@@ -9,10 +9,16 @@ class App extends Component {
     return (
       <div className="App">
       <Header/> 
-      <NavBar />     
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <div className="row">
+          <div className="col-md-5">
+            <label>Enter text here</label>
+            <textarea className="form-control" id="textInput" rows="3" />
+            <button type="submit" className="btn btn-primary">Submit</button>
+          </div>
+          <div className="col-md-7">
+            <input type="range" id="myRange" defaultValue="90"/>
+          </div>
+        </div>
       </div>
     );
   }
