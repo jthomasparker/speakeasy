@@ -3,12 +3,14 @@ import logo from './logo.svg';
 import './App.css';
 import Header from "./components/Header";
 import NavBar from './components/NavBar';
+import RangeSlider from "./components/RangeSlider";
+
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-      <Header/> 
+        <Header />
         <div className="row">
           <div className="col-md-5">
             <label>Enter text here</label>
@@ -16,7 +18,7 @@ class App extends Component {
             <button type="submit" className="btn btn-primary">Submit</button>
           </div>
           <div className="col-md-7">
-            <input type="range" id="myRange" defaultValue="90"/>
+            <RangeSlider />
           </div>
         </div>
       </div>
