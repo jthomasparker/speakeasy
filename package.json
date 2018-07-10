@@ -21,9 +21,13 @@
   "dependencies": {
     "axios": "^0.16.2",
     "body-parser": "^1.17.2",
+    "brain.js": "^1.2.2",
     "express": "^4.15.4",
     "if-env": "^1.0.4",
+    "jsonfile": "^4.0.0",
+    "moment": "^2.22.2",
     "mongoose": "^5.0.17",
+    "natural": "^0.6.1",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
     "sentiment": "^5.0.1"
