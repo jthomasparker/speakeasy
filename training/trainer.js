@@ -2,6 +2,7 @@ const AsyncClassifier = require('../async-classifier/async-classifier.js')
 const classifier = new AsyncClassifier()
 const randomClassifier = new AsyncClassifier()
 const sentimentData = require('./sentiment-data.js')
+const twitterData = require('./twitter-data.js')
 let iteration = 0;
 let classAvgErrArr =[];
 let randAvgErrArr = [];
@@ -19,6 +20,7 @@ let classifierTwo = new AsyncClassifier()
 let classifierThree = new AsyncClassifier()
 let classifierFour = new AsyncClassifier()
 let classifierFive = new AsyncClassifier()
+let twitterClassifier = new AsyncClassifier()
 
 
 const getRandom = (min, max) => Math.floor(Math.random() * (max - min) + min)
@@ -64,8 +66,8 @@ const train = (start, end) => {
 }
 
 const getAccuracy = (thisClassifier, avgErrArr) => {
-    let max = getRandom(2000, sentimentData.length)
-  //  let min = getRandom(max - 500, max)
+   // let max = getRandom(2000, sentimentData.length)
+   let max = 5000
     let min = max - 200
     let error = 0;
     let total = 0;
@@ -75,7 +77,8 @@ const getAccuracy = (thisClassifier, avgErrArr) => {
     for(let i = min; i < max; i++){
         total++
         let result = thisClassifier.getResult(sentimentData[i].input)
-        let guess = result[0][1]
+       // console.log(result)
+        let guess = result[0].confidence
         let correctAns = sentimentData[i].rating
         error += Math.abs(guess - correctAns)
     }
@@ -108,7 +111,16 @@ const trainRandom = (thisClassifier, num, filePath, thisErrArr) => {
     for(let i = 0; i < 50; i++){
         let j = getRandom(0, sentimentData.length)
         if(!trainedIds.includes(sentimentData[j].id)){
-        thisClassifier.addDefinition(sentimentData[j].input, sentimentData[j].rating)
+          //  let label = sentimentData[j].rating.toFixed(1).toString()
+           let rating = sentimentData[j].rating
+           let label;
+           if(rating <= .2) label = "Very Negative"
+           if(rating > .2 &&  rating <= .4) label = "Negative"
+           if(rating > .4 && rating <= .6) label = "Neutral"
+           if(rating > .6 && rating <= .8) label = "Positive"
+           if(rating > .8) label = "Very Positive"
+           
+        thisClassifier.addDefinition(sentimentData[j].input, label)//sentimentData[j].rating)
         trainedIds.push(sentimentData[j].id)
         } else {
             i -= 1
@@ -134,16 +146,72 @@ const trainRandom = (thisClassifier, num, filePath, thisErrArr) => {
     })
 }
 
+const trainTwitter = (thisClassifier, num, filePath, thisErrArr) => {
+
+    for(let i = 0; i < 50; i++){
+       // if(i % 2 === 0){
+      //  let input = twitterData[i+1]
+      //  let output = twitterData[i]
+           let r = getRandom(0, twitterData.length)
+           let input
+           let output
+        if(!trainedIds.includes(r)){
+        
+           if(r % 2 === 0){
+               input = twitterData[r + 1]
+               output = twitterData[r]
+           } else {
+               input = twitterData[r]
+               output = twitterData[r-1]
+           }
+           thisClassifier.addDefinition(input, output)
+           trainedIds.push(r)
+        } else {
+            i -= 1
+        }
+        
+
+          //  console.log(input, output)
+            
+       // }
+    }
+    console.log(`twitterClassifier${num}: training...`)
+    thisClassifier.train().then(res => {
+        console.log(res)
+        thisClassifier.save(filePath)
+        console.log(`twitterClassifier${num}: saved`)
+        console.log(`twitterClassifier${num}: \n`,JSON.stringify(getStatus(thisClassifier, thisErrArr), null, 2))
+        if(trainedIds.length + 50 <= twitterData.length){
+        trainTwitter(thisClassifier, num, filePath, thisErrArr)
+        } else {
+            console.log(`twitterClassifier${num}: done`)
+        }
+    })
+    .catch(err => {
+        console.log(`twitterClassifier${num}:`, err)
+      //  trainRandom(thisClassifier, num, filePath, thisErrArr)
+    })
+}
+
 const start = () => {
    // classifier.restore('./sentimentNet.json')
   //  console.log("Classifier Restored: \n",classifier.getStats())
   //  train(0, 50)
-    trainRandom(classifierOne, 6, './six.json', one)
-    trainRandom(classifierTwo, 7, './seven.json', two)
-    trainRandom(classifierThree, 8, './eight.json', three)
-    trainRandom(classifierFour, 9, './nine.json', four)
-    trainRandom(classifierFive, 10, './ten.json', five)
+
+   // trainRandom(classifierOne, 6, './six.json', one)
+ //   trainRandom(classifierTwo, 7, './seven.json', two)
+ //   trainRandom(classifierThree, 3, './three.json', three)
+  //  trainRandom(classifierFour, 9, './nine.json', four)
+  //  trainRandom(classifierFive, 10, './classOne.json', five)
+ // classifier.restore('./sentimentNet.json')
+ // console.log(JSON.stringify(getStatus(classifier, one), null, 2))
+    trainTwitter(classifierOne, 1, './twitterOne.json', one)
+    trainTwitter(classifierTwo, 2, './twitterTwo.json', two)
+    trainTwitter(classifierThree, 3, './twitterThree.json', three)
+    trainTwitter(classifierFour, 4, './twitterFour.json', four)
+    trainTwitter(classifierFive, 5, './twitterFive.json', five)
 }
 
 //train(500, 510)
 start()
+//trainTwitter(0, 50)
