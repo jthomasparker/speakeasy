@@ -2,22 +2,26 @@ const AsyncClassifier = require('../async-classifier/async-classifier.js')
 const Sentiment = require('sentiment')
 sentiment = new Sentiment();
 const netFiles = [
-    './trainedNets/one.json', './trainedNets/two.json', './trainedNets/three.json', './trainedNets/four.json', './trainedNets/five.json',
-    './trainedNets/six.json', './trainedNets/seven.json', './trainedNets/eight.json', './trainedNets/nine.json', './trainedNets/ten.json',
-    './trainedNets/twitterOne.json', './trainedNets/twitterTwo.json', './trainedNets/twitterThree.json',
-    './trainedNets/twitterFour.json', './trainedNets/twitterFive.json',
+    './net/trainedNets/one.json', './net/trainedNets/two.json', './net/trainedNets/three.json', './net/trainedNets/four.json',
+    './net/trainedNets/five.json', './net/trainedNets/six.json', './net/trainedNets/seven.json', './net/trainedNets/eight.json',
+    './net/trainedNets/nine.json', './net/trainedNets/ten.json', './net/trainedNets/twitterOne.json',
+    './net/trainedNets/twitterTwo.json', './net/trainedNets/twitterThree.json', './net/trainedNets/twitterFour.json', './net/trainedNets/twitterFive.json'
 ]
+
 
 module.exports = {
     getSentiment: (req, res) => {
+        console.log(req.body)
+        let userInput = req.body.userInput
         let netSentiment;
+        let adjustedNetSentiment;
         let sentimentNpm;
         let sum = 0
         let resultsArr = 
         netFiles.map(filePath => {
             let classifier = new AsyncClassifier()
             classifier.restore(filePath)
-            let result = classifier.getTopResult(req.body)
+            let result = classifier.getTopResult(userInput)
             sum += result.confidence
             return result
         })
@@ -26,18 +30,24 @@ module.exports = {
         let sortedResults = resultsArr.sort((a, b) => {
             return b.confidence - a.confidence
         })
+        // average of total
+        netSentiment = sum / netFiles.length
+
         // subtract min/max from sum
         sum -= sortedResults[0].confidence
         sum -= sortedResults[14].confidence
-        // get average
-        netSentiment = sum / 13
-        console.log(netSentiment)
+
+        // average of total minus lowest and highest values
+        adjustedNetSentiment = sum / (netFiles.length - 2)
+        console.log(netSentiment, adjustedNetSentiment)
+
         // get sentiment from sentiment npm for comparison
-        sentimentResult = sentiment.analyze(req.body)
+        sentimentResult = sentiment.analyze(userInput)
         console.log(sentimentResult)
         sentimentNpm = (sentimentResult.comparative + 5) / 10
         let sentimentData = {
             neuralNetRating: netSentiment,
+            adjustedNetRating: adjustedNetSentiment,
             sentimentRating: sentimentNpm
         }
         res.json(sentimentData)
