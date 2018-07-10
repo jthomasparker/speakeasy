@@ -1,30 +1,18 @@
 import Slider from 'react-rangeslider'
 import React, {Component} from "react";
  
-class RangeSlider extends Component {
-  constructor(props, context) {
-    super(props, context)
-    this.state = {
-      volume: 0
-    }
-  }
- 
-  handleOnChange = (value) => {
-    this.setState({
-      volume: value
-    })
-  }
- 
-  render() {
-    let { volume } = this.state
-    return (
+
+  const RangeSlider = props => (
+    <div>
       <Slider
-        value={volume}
-        orientation="vertical"
-        onChange={this.handleOnChange}
+        value={props.value}
+        orientation={props.orientation}
+       // onChange={this.handleOnChange}
+       labels={props.labels}
       />
+    </div>
     )
-  }
-}
+  
+
 
 export default RangeSlider;

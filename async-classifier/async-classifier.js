@@ -2,6 +2,7 @@ const brain = require('brain.js');
 const natural = require('natural')
 var jf = require('jsonfile')
 const moment = require('moment')
+const path = require('path')
 
 
 const AsyncClassifier = function(autoTrain, autoTrainThreshold, brainOptions, trainingOptions, tokenizer, stemmer){
@@ -136,6 +137,8 @@ const AsyncClassifier = function(autoTrain, autoTrainThreshold, brainOptions, tr
         return savedBrain;
     },
     this.restore = (filePath) => {
+        //TODO: fix filepath
+       // let file = path.join(__dirname, filePath)
         let savedBrain = this.isJson(filePath)
                         ? JSON.parse(filePath)
                         : jf.readFileSync(filePath, (err) => {

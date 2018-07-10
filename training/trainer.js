@@ -193,6 +193,30 @@ const trainTwitter = (thisClassifier, num, filePath, thisErrArr) => {
     })
 }
 
+const trainSpecific = (thisClassifier, classifierName, filepath) => {
+    console.log(classifierName + " adding defs")
+    console.log("I love you",thisClassifier.getTopResult("I love you"))
+    console.log("I hate you",thisClassifier.getTopResult("I hate you"))
+    console.log("I love that",thisClassifier.getTopResult("I love that"))
+    console.log("I hate that",thisClassifier.getTopResult("I hate that"))
+    thisClassifier.addDefinition("I love you", 1)
+    thisClassifier.addDefinition("I hate you", 0)
+    thisClassifier.addDefinition("I love that", 1)
+    thisClassifier.addDefinition("I hate that", 0)
+    console.log(classifierName + " training")
+    thisClassifier.train()
+        .then(res => {
+            console.log(classifierName + " trained")
+            console.log(res)
+            console.log("I love you",thisClassifier.getTopResult("I love you"))
+            console.log("I hate you",thisClassifier.getTopResult("I hate you"))
+            console.log("I love that",thisClassifier.getTopResult("I love that"))
+            console.log("I hate that",thisClassifier.getTopResult("I hate that"))
+            thisClassifier.save(filepath)
+            
+        })
+}
+
 const start = () => {
    // classifier.restore('./sentimentNet.json')
   //  console.log("Classifier Restored: \n",classifier.getStats())
@@ -205,11 +229,24 @@ const start = () => {
   //  trainRandom(classifierFive, 10, './classOne.json', five)
  // classifier.restore('./sentimentNet.json')
  // console.log(JSON.stringify(getStatus(classifier, one), null, 2))
-    trainTwitter(classifierOne, 1, './twitterOne.json', one)
+ /*   trainTwitter(classifierOne, 1, './twitterOne.json', one)
     trainTwitter(classifierTwo, 2, './twitterTwo.json', two)
     trainTwitter(classifierThree, 3, './twitterThree.json', three)
     trainTwitter(classifierFour, 4, './twitterFour.json', four)
-    trainTwitter(classifierFive, 5, './twitterFive.json', five)
+    trainTwitter(classifierFive, 5, './twitterFive.json', five)*/
+    classifierOne.restore('../net/trainedNets/twitterOne.json')
+    classifierTwo.restore('../net/trainedNets/twitterTwo.json')
+    classifierThree.restore('../net/trainedNets/twitterThree.json')
+    classifierFour.restore('../net/trainedNets/twitterFour.json')
+    classifierFive.restore('../net/trainedNets/ten.json')
+    trainSpecific(classifierOne, "twitterOne", '../net/trainedNets/twitterOne.json')
+    trainSpecific(classifierTwo, "twitterTwo", '../net/trainedNets/twitterTwo.json')
+    trainSpecific(classifierThree, "twitterThree", '../net/trainedNets/twitterThree.json')
+    trainSpecific(classifierFour, "twitterFour", '../net/trainedNets/twitterFour.json')
+    trainSpecific(classifierFive, "ten", '../net/trainedNets/ten.json')
+    
+
+
 }
 
 //train(500, 510)
