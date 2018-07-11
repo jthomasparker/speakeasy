@@ -7,7 +7,7 @@ import React, {Component} from "react";
       <Slider
         value={props.value}
         orientation={props.orientation}
-       // onChange={this.handleOnChange}
+        onChange={props.handleSliderChange}
        labels={props.labels}
       />
     </div>
