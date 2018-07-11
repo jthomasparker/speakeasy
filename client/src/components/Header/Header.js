@@ -1,5 +1,6 @@
 import React from "react";
 import './Header.css';
+import prof from './JAZ.PNG';
 
 const Header = props => (
     <div>
@@ -10,7 +11,7 @@ const Header = props => (
             </div>
             <div className="col-md-6 profile-info">
                 <a href={"#"}><br />Log in</a>
-                <img src={"../../../public/assets/img/anon-profile-pic.png"} alt={"profile-pic"} />
+                <img className="profilePic" src={prof} alt={"profile-pic"} />
             </div>
 
         </div>
