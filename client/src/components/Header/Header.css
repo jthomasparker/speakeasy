@@ -9,9 +9,10 @@
     padding: 20px;  
   }
   
-  h1,h5, a{
+  h5, a, .titleHeader{
     color: white !important;
   }
+  
 
   .profile-info{
       text-align: right
