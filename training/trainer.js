@@ -21,6 +21,7 @@ let classifierThree = new AsyncClassifier()
 let classifierFour = new AsyncClassifier()
 let classifierFive = new AsyncClassifier()
 let twitterClassifier = new AsyncClassifier()
+;
 
 
 const getRandom = (min, max) => Math.floor(Math.random() * (max - min) + min)
@@ -234,7 +235,7 @@ const start = () => {
     trainTwitter(classifierThree, 3, './twitterThree.json', three)
     trainTwitter(classifierFour, 4, './twitterFour.json', four)
     trainTwitter(classifierFive, 5, './twitterFive.json', five)*/
-    classifierOne.restore('../net/trainedNets/twitterOne.json')
+   /* classifierOne.restore('../net/trainedNets/twitterOne.json')
     classifierTwo.restore('../net/trainedNets/twitterTwo.json')
     classifierThree.restore('../net/trainedNets/twitterThree.json')
     classifierFour.restore('../net/trainedNets/twitterFour.json')
@@ -243,7 +244,9 @@ const start = () => {
     trainSpecific(classifierTwo, "twitterTwo", '../net/trainedNets/twitterTwo.json')
     trainSpecific(classifierThree, "twitterThree", '../net/trainedNets/twitterThree.json')
     trainSpecific(classifierFour, "twitterFour", '../net/trainedNets/twitterFour.json')
-    trainSpecific(classifierFive, "ten", '../net/trainedNets/ten.json')
+    trainSpecific(classifierFive, "ten", '../net/trainedNets/ten.json')*/
+    let thisClassifier = new AsyncClassifier({autoTrain: false, autoTrainThreshold: 2000})
+    console.log(thisClassifier.config)
     
 
 
