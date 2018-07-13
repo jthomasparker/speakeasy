@@ -8,4 +8,5 @@ router.route('/')
 
 router.route('/trainer')
     .post(trainerController.updateOrInsert)
+    
 module.exports = router;

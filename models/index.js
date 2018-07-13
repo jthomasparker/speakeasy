@@ -1,3 +1,5 @@
 module.exports = {
-    Trainer: require('./trainer')
+    Trainer: require('./trainer'),
+    User: require('./user'),
+    Net: require('./net')
 }

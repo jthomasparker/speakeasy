@@ -5,7 +5,11 @@ const moment = require('moment')
 const path = require('path')
 
 
-const AsyncClassifier = function(autoTrain, autoTrainThreshold, brainOptions, trainingOptions, tokenizer, stemmer){
+const AsyncClassifier = function(/*config, */autoTrain, autoTrainThreshold, brainOptions, trainingOptions, tokenizer, stemmer){
+   /* this.config = {
+        autoTrain: config ? config.autoTrain || true : true,
+        autoTrainThreshold: config ? config.autoTrainThreshold : 1000
+    } */
     this.autoTrain = autoTrain || true,
     this.autoTrainThreshold = autoTrainThreshold || 1000,
     this.brainOptions = brainOptions,
