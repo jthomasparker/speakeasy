@@ -1,0 +1,12 @@
+.card {
+    box-shadow: 0px 3px 6px #999, 0px 3px 6px #999;
+    border: none;
+    height: auto;
+    margin: 1rem;
+  }
+
+  .card:hover{
+    box-shadow: 6px 9px 12px #999, 6px 9px 12px #999;
+      padding: 0px;
+      border-radius: 0px; 
+  }

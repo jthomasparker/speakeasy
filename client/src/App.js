@@ -4,6 +4,7 @@ import './App.css';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
 import Analyzer from './pages/Analyzer'
 import Trainer from './pages/Trainer'
+import Login from './pages/Login'
 
 
 
@@ -13,6 +14,7 @@ const App = () => (
       <Switch>
         <Route exact path='/' component={Analyzer} />
         <Route exact path='/trainer' component={Trainer} />
+        <Route exact path='/login' component={Login} />
       </Switch>
     </div>
   </Router>

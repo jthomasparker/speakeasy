@@ -8,5 +8,11 @@ router.route('/')
 
 router.route('/trainer')
     .post(trainerController.updateOrInsert)
-    
+
+router.post('/test', (req, res) => {
+    console.log(req.body)
+    res.json(req.body)
+})
+
+
 module.exports = router;
