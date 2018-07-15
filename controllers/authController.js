@@ -6,6 +6,13 @@ const jwtExp = require('express-jwt')
 module.exports = {
     create: (req, res) => {
       //  console.log(req.body)
+   /*   db.User.findOne({ username: req.body.username })
+        .then(user => {
+            if(user){
+                res.json({
+                    status: 'Username already exists!'
+                })
+            })*/
         bcrypt.genSalt(10, (err, salt) => {
             if (err) {
                 res.json({
@@ -45,20 +52,20 @@ module.exports = {
                 if(user){
                     bcrypt.compare(req.body.password, user.password, (err, valid) => {
                         if(err || !valid){
-                            res.status(403).json({
+                            res.json({
                                 status: 'Incorrect username or password',
                                 error: err
                             })
                         } else {
                             let jwtAuthToken = jwt.sign({
                                 exp: Math.floor(Date.now() / 1000) + (60 * 60),
-                                data: {
+                                user: {
                                     userId: user._id,
                                     username: user.username
                                 }
                             }, 'random_secret')
                             res.cookie('jwtAuthToken', jwtAuthToken, {
-                                secure: process.env.NODE_ENV === 'production',
+                                secure: process.env.NODE_ENV === 'development',
                                 signed: true
                             })
                           //  res.redirect('/braintrain/' + user._id)
@@ -69,21 +76,11 @@ module.exports = {
                             })
                         }
                     })
+                } else {
+                    res.json({
+                        status: 'Username not found'
+                    })
                 }
             })
-    },
-
-    authenticate: (req, res) => {
-        console.log("made it to auth")
-        jwtExp({
-            secret: 'random_secret',
-            getToken: function fromCookie(req){
-                if(req.signedCookies){
-                    return req.signedCookies.jwtAuthToken
-                }
-                return null
-            },
-            credentialsRequired: false
-        })
     }
 }

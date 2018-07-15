@@ -1,12 +1,18 @@
 const router = require('express').Router();
-const authController = require('../../controllers/authController')
 
-router.get('/', (req, res, next) => {
-    console.log("made it")
+
+// /braintrain/
+router.get('/', (req, res) => {
     if(req.user) {
-        next()
+        res.json({
+            userData: req.user,
+            urlPath: '/braintrain/' + req.user.user.userId
+        })
     } else {
-        res.redirect('/login')
+        res.json({
+            status: "Not Authorized",
+            urlPath: '/login'
+        })
     }
 })
 

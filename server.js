@@ -14,7 +14,7 @@ app.use(cookieParser('random_secret'))
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
 }
-// Add routes, both API and view
+// Add routes: API, Auth, User
 app.use(routes);
 
 // Connect to the Mongo DB

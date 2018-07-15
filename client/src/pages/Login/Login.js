@@ -8,8 +8,20 @@ import API from "../../utils/API"
 class Login extends Component {
     state = {
         username: "",
-        password: ""
+        password: "",
+        status: ""
     };
+
+    componentDidMount = () => {
+        // checks to see if the user is already authenticated
+        API.getUser()
+            .then(res => {
+                console.log(res)
+                if(res.data.urlPath !== '/login'){
+                    window.location = res.data.urlPath
+                }
+            })
+    }
 
     handleInputChange = event => {
         const { id, value } = event.target;
@@ -32,11 +44,29 @@ class Login extends Component {
             API.login(data)
             .then(res => {
                 console.log(res)
+                if(res.data.userId){
+                    window.location = '/braintrain/' + res.data.userId
+                } else {
+                    this.setState({
+                        status: res.data.status,
+                        username: "",
+                        password: ""
+                    })
+                }
             })
         } else {
             API.signup(data)
             .then(res => {
                 console.log(res)
+                if(res.data.userId){
+                    window.location = '/braintrain/' + res.data.userId
+                } else {
+                    this.setState({
+                        status: res.data.status,
+                        username: "",
+                        password: ""
+                    })
+                }
             })
         }
     }
@@ -80,7 +110,7 @@ class Login extends Component {
                         >
                         Login
                     </Button>
-                    <center>OR</center>
+                    <center><p className="card-text">OR</p></center>
                     <Button
                         block
                         id="signup"
@@ -91,6 +121,7 @@ class Login extends Component {
                         >
                         <p className="card-text">Signup</p>
                     </Button>
+                    <p className="card-text">{this.state.status}</p>
                 </form>
                 </div>
                 </div>
