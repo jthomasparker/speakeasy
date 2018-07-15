@@ -5,26 +5,30 @@ import RangeSlider from "../../components/RangeSlider";
 import AddedTable from "../../components/AddedTable";
 import API from "../../utils/API"
 
-
-
 class UserBrainTrain extends Component {
   state = {
     userInput: "",
-    userClassification: "",
-    lastRecord: {
-      id: "",
-      input: "",
-      sentiment: "",
-      moods: ""
-    },
-    userAdded: []
+    userClassification: "",    
+    userAdded: [],
+    userTestInput: "" 
   }
 
   handleInputChange = event => {
+    // alert(event.target.name + " " + event.target.value);
     const { name, value } = event.target;
     this.setState({
       [name]: value
     });
+  }
+
+  handleDataStage = event => {
+    this.setState({ userAdded: [...this.state.userAdded, 
+      {input: this.state.userInput, classification: this.state.userClassification}]});
+      
+  }
+
+  getstate = event => {
+    console.log(this.state);
   }
 
   toggleCheckBoxes = event => {
@@ -70,13 +74,7 @@ class UserBrainTrain extends Component {
       .then(res => {
         console.log(res)
         let moods = res.data.moods.map(mood => mood.value)
-        this.setState({
-          lastRecord: {
-            id: res.data._id,
-            input: res.data.input,
-            sentiment: res.data.sentiment,
-            moods: moods
-          },
+        this.setState({          
           userInput: "",
           sentimentValue: 0,
           moods: [
@@ -143,13 +141,19 @@ class UserBrainTrain extends Component {
               <input type="text"
                 className="form-control"
                 id="classificationInput"
+                name="userClassification"
                 value={this.state.userClassification}
-                onChange={this.handleClassificationChange} />
+                onChange={this.handleInputChange} />
               <button type="submit"
                 className="btn btn-primary"
-                onClick={this.handleFormSubmit}
-                disabled={!(this.state.userInput)}>
+                onClick={this.handleDataStage}
+                disabled={!(this.state.userInput) || !(this.state.userClassification)}>
                 Stage Training Data
+                </button>
+              <button type="submit"
+                className="btn btn-primary"
+                onClick={this.getstate}>
+                Get State
                 </button>
             </div>
             <div className="col-md-4">
@@ -182,7 +186,7 @@ class UserBrainTrain extends Component {
               />
             </div>
             <div className="col-md-6">
-              <h4>Classification {this.state.lastRecord.moods}</h4>
+              <h4>Classification</h4>
             </div>
             <button type="submit"
               className="btn btn-primary"
