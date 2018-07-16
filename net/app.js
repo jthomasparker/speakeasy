@@ -54,12 +54,12 @@ module.exports = {
         // get the mood
         let moods = moodClassifer.getResult(userInput)
         // get the custom sentiment
-        let customSentiment = customClassifier.getResult(userInput)
+        let customSentiment = customClassifier.getTopResult(userInput)
         let sentimentData = {
             neuralNetRating: netSentiment,
             adjustedNetRating: adjustedNetSentiment,
             sentimentNpmRating: sentimentNpm,
-            customerSentiment: customSentiment,
+            customSentiment: customSentiment,
             moods: moods
         }
         res.json(sentimentData)
