@@ -3,6 +3,7 @@ const classifier = new AsyncClassifier()
 const randomClassifier = new AsyncClassifier()
 const sentimentData = require('./sentiment-data.js')
 const twitterData = require('./twitter-data.js')
+const amazonImdbYelpData = require('./amazonImdbYelp-Data.js')
 let iteration = 0;
 let classAvgErrArr =[];
 let randAvgErrArr = [];
@@ -157,14 +158,14 @@ const trainTwitter = (thisClassifier, num, filePath, thisErrArr) => {
            let input
            let output
         if(!trainedIds.includes(r)){
-        
+        /*
            if(r % 2 === 0){
                input = twitterData[r + 1]
                output = twitterData[r]
            } else {
                input = twitterData[r]
                output = twitterData[r-1]
-           }
+           }*/
            thisClassifier.addDefinition(input, output)
            trainedIds.push(r)
         } else {
@@ -200,10 +201,10 @@ const trainSpecific = (thisClassifier, classifierName, filepath) => {
     console.log("I hate you",thisClassifier.getTopResult("I hate you"))
     console.log("I love that",thisClassifier.getTopResult("I love that"))
     console.log("I hate that",thisClassifier.getTopResult("I hate that"))
-    thisClassifier.addDefinition("I love you", 1)
+   /* thisClassifier.addDefinition("I love you", 1)
     thisClassifier.addDefinition("I hate you", 0)
     thisClassifier.addDefinition("I love that", 1)
-    thisClassifier.addDefinition("I hate that", 0)
+    thisClassifier.addDefinition("I hate that", 0)*/
     console.log(classifierName + " training")
     thisClassifier.train()
         .then(res => {
@@ -214,6 +215,7 @@ const trainSpecific = (thisClassifier, classifierName, filepath) => {
             console.log("I love that",thisClassifier.getTopResult("I love that"))
             console.log("I hate that",thisClassifier.getTopResult("I hate that"))
             thisClassifier.save(filepath)
+            
             
         })
 }
@@ -245,8 +247,8 @@ const start = () => {
     trainSpecific(classifierThree, "twitterThree", '../net/trainedNets/twitterThree.json')
     trainSpecific(classifierFour, "twitterFour", '../net/trainedNets/twitterFour.json')
     trainSpecific(classifierFive, "ten", '../net/trainedNets/ten.json')*/
-    let thisClassifier = new AsyncClassifier({autoTrain: false, autoTrainThreshold: 2000})
-    console.log(thisClassifier.config)
+   // let thisClassifier = new AsyncClassifier({autoTrain: false, autoTrainThreshold: 2000})
+  //  console.log(thisClassifier.config)
     
 
 
