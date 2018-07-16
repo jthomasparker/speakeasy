@@ -9,7 +9,8 @@ class Login extends Component {
     state = {
         username: "",
         password: "",
-        status: ""
+        status: "",
+        url: "/login"
     };
 
     componentDidMount = () => {
@@ -18,7 +19,10 @@ class Login extends Component {
             .then(res => {
                 console.log(res)
                 if(res.data.urlPath !== '/login'){
-                    window.location = res.data.urlPath
+                    this.setState({
+                        url: res.data.urlPath
+                    })
+                    window.location = this.state.url
                 }
             })
     }
@@ -119,7 +123,7 @@ class Login extends Component {
                         className="btn btn-primary"
                         onClick={this.handleFormSubmit}
                         >
-                        <p className="card-text">Signup</p>
+                        Signup
                     </Button>
                     <p className="card-text">{this.state.status}</p>
                 </form>
