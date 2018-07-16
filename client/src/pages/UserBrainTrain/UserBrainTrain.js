@@ -122,8 +122,8 @@ class UserBrainTrain extends Component {
     // Set the height
     this.setState({ tableHeight: height + "px" });
 
-    API.getUser()
-      .then(res => window.location = res.data.urlPath)
+    // API.getUser()
+    //   .then(res => window.location = res.data.urlPath)
   }
 
   onDeleteRow = row => {
