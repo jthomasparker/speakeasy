@@ -9,6 +9,9 @@ import API from "../../utils/API"
 class Trainer extends Component {
   state = {
     userInput: "",
+    topMoodResult: "",
+    secondMoodResult: "",
+    thirdMoodResult: "",
     lastRecord: {
       id: "",
       input: "",
@@ -80,7 +83,10 @@ class Trainer extends Component {
           console.log(res)
           let sentiment = Math.round(res.data.neuralNetRating * 100)
           this.setState({
-            sentimentValue: sentiment
+            sentimentValue: sentiment,
+            topMoodResult: `${res.data.moods[0].label} (${Math.round(res.data.moods[0].confidence * 100)}%)`,
+            secondMoodResult: `${res.data.moods[1].label} (${Math.round(res.data.moods[1].confidence * 100)}%)`,
+            thirdMoodResult: `${res.data.moods[2].label} (${Math.round(res.data.moods[2].confidence * 100)}%)`
           })
         })
     }
@@ -178,6 +184,10 @@ class Trainer extends Component {
             <div className="col-md-2">
               <h4>Sentiment Rating:</h4>
               <h2>{this.state.sentimentValue}</h2>
+              <h4>Top 3 Moods:</h4>
+              <h4>{this.state.topMoodResult}</h4>
+              <h4>{this.state.secondMoodResult}</h4>
+              <h4>{this.state.thirdMoodResult}</h4>
             </div>
             <div className="col-md-5">
               <RangeSlider 
