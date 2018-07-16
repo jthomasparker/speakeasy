@@ -59,7 +59,7 @@ module.exports = {
             neuralNetRating: netSentiment,
             adjustedNetRating: adjustedNetSentiment,
             sentimentNpmRating: sentimentNpm,
-            customSentiment: customSentiment,
+            customSentiment: customSentiment.confidence,
             moods: moods
         }
         res.json(sentimentData)
