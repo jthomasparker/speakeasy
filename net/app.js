@@ -8,6 +8,7 @@ const netFiles = [
     './net/trainedNets/twitterTwo.json', './net/trainedNets/twitterThree.json', './net/trainedNets/twitterFour.json', './net/trainedNets/twitterFive.json'
 ]
 const moodClassifer = new AsyncClassifier()
+const customClassifier = new AsyncClassifier()
 
 
 
@@ -15,6 +16,7 @@ module.exports = {
     getSentiment: (req, res) => {
         console.log(req.body)
         moodClassifer.restore('./net/trainedNets/moodClassifier.json')
+        customClassifier.restore('./net/trainedNets/customSentiment.json')
         let userInput = req.body.userInput
         let netSentiment;
         let adjustedNetSentiment;
@@ -51,10 +53,13 @@ module.exports = {
 
         // get the mood
         let moods = moodClassifer.getResult(userInput)
+        // get the custom sentiment
+        let customSentiment = customClassifier.getResult(userInput)
         let sentimentData = {
             neuralNetRating: netSentiment,
             adjustedNetRating: adjustedNetSentiment,
-            sentimentRating: sentimentNpm,
+            sentimentNpmRating: sentimentNpm,
+            customerSentiment: customSentiment,
             moods: moods
         }
         res.json(sentimentData)

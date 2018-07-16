@@ -45,7 +45,7 @@ class Trainer extends Component {
           checked: false
         },
         {
-          value: "nuetral",
+          value: "neutral",
           checked: false
         }
       ]
@@ -145,7 +145,7 @@ class Trainer extends Component {
           checked: false
         },
         {
-          value: "nuetral",
+          value: "neutral",
           checked: false
         }
       ]
