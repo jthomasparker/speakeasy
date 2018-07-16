@@ -527,5 +527,513 @@ module.exports = moods = [
             }
     ],
     "sentiment" : 85
+},
+{
+        "_id" : `ObjectId("5b4ceb9b2a1c2a6f816b8ecd")`,
+        "input" : "i love you",
+        "__v" : 0,
+        "trained" : true,
+        "moods" : [
+                {
+                        "value" : "happy",
+                        "checked" : true
+                },
+                {
+                        "value" : "grateful",
+                        "checked" : true
+                }
+        ],
+        "sentiment" : 100
+},
+{
+        "_id" : `ObjectId("5b4cebd02a1c2a6f816b9132")`,
+        "input" : "yay!",
+        "__v" : 0,
+        "trained" : true,
+        "moods" : [
+                {
+                        "value" : "happy",
+                        "checked" : true
+                },
+                {
+                        "value" : "excited",
+                        "checked" : true
+                },
+                {
+                        "value" : "grateful",
+                        "checked" : true
+                }
+        ],
+        "sentiment" : 97
+},
+{
+        "_id" : `ObjectId("5b4cec4e2a1c2a6f816b96e4")`,
+        "input" : "i like beer",
+        "__v" : 0,
+        "trained" : true,
+        "moods" : [
+                {
+                        "value" : "happy",
+                        "checked" : true
+                },
+                {
+                        "value" : "grateful",
+                        "checked" : true
+                }
+        ],
+        "sentiment" : 100
+},
+{
+        "_id" : `ObjectId("5b4cecdb2a1c2a6f816b9d8d")`,
+        "input" : "she'll be smart as fuck after only a few days of us shitting",
+        "__v" : 0,
+        "trained" : true,
+        "moods" : [
+                {
+                        "value" : "happy",
+                        "checked" : true
+                },
+                {
+                        "value" : "excited",
+                        "checked" : true
+                }
+        ],
+        "sentiment" : 72
+},
+{
+        "_id" : `ObjectId("5b4cecf52a1c2a6f816b9eb4")`,
+        "input" : "I can't wait!",
+        "__v" : 0,
+        "trained" : true,
+        "moods" : [
+                {
+                        "value" : "happy",
+                        "checked" : true
+                },
+                {
+                        "value" : "excited",
+                        "checked" : true
+                },
+                {
+                        "value" : "grateful",
+                        "checked" : true
+                }
+        ],
+        "sentiment" : 90
+},
+{
+        "_id" : `ObjectId("5b4ced3a2a1c2a6f816ba1c1")`,
+        "input" : "one small step for a man, one giant leap for mankind",
+        "__v" : 0,
+        "trained" : true,
+        "moods" : [
+                {
+                        "value" : "happy",
+                        "checked" : true
+                },
+                {
+                        "value" : "excited",
+                        "checked" : true
+                }
+        ],
+        "sentiment" : 76
+},
+{
+        "_id" : `ObjectId("5b4cedb02a1c2a6f816ba709")`,
+        "input" : "good morning",
+        "__v" : 0,
+        "trained" : true,
+        "moods" : [
+                {
+                        "value" : "happy",
+                        "checked" : true
+                }
+        ],
+        "sentiment" : 74
+},
+{
+        "_id" :`ObjectId("5b4ceddf2a1c2a6f816ba8f3")`,
+        "input" : "I love this place",
+        "__v" : 0,
+        "trained" : true,
+        "moods" : [
+                {
+                        "value" : "happy",
+                        "checked" : true
+                },
+                {
+                        "value" : "grateful",
+                        "checked" : true
+                }
+        ],
+        "sentiment" : 70
+},
+{
+        "_id" : `ObjectId("5b4cedf52a1c2a6f816ba9b6")`,
+        "input" : "i love this place!",
+        "__v" : 0,
+        "trained" : true,
+        "moods" : [
+                {
+                        "value" : "happy",
+                        "checked" : true
+                },
+                {
+                        "value" : "excited",
+                        "checked" : true
+                },
+                {
+                        "value" : "grateful",
+                        "checked" : true
+                }
+        ],
+        "sentiment" : 85
+},
+{
+        "_id" : `ObjectId("5b4cee0c2a1c2a6f816baa95")`,
+        "input" : "I love this place!!!!!!",
+        "__v" : 0,
+        "trained" : true,
+        "moods" : [
+                {
+                        "value" : "happy",
+                        "checked" : true
+                },
+                {
+                        "value" : "excited",
+                        "checked" : true
+                },
+                {
+                        "value" : "grateful",
+                        "checked" : true
+                }
+        ],
+        "sentiment" : 100
+},
+{
+        "_id" : `ObjectId("5b4cee552a1c2a6f816bad33")`,
+        "input" : "This place should honestly be blown up.",
+        "__v" : 0,
+        "trained" : true,
+        "moods" : [
+                {
+                        "value" : "irritated",
+                        "checked" : true
+                },
+                {
+                        "value" : "angry",
+                        "checked" : true
+                }
+        ],
+        "sentiment" : 16
+},
+{
+        "_id" : `ObjectId("5b4ceef72a1c2a6f816bb323")`,
+        "input" : "Yay we've been waiting for this day!",
+        "__v" : 0,
+        "trained" : true,
+        "moods" : [
+                {
+                        "value" : "happy",
+                        "checked" : true
+                },
+                {
+                        "value" : "excited",
+                        "checked" : true
+                },
+                {
+                        "value" : "grateful",
+                        "checked" : true
+                }
+        ],
+        "sentiment" : 68
+},
+{
+        "_id" : `ObjectId("5b4cf0d22a1c2a6f816bc50d")`,
+        "input" : "That shit stinks",
+        "__v" : 0,
+        "trained" : true,
+        "moods" : [
+                {
+                        "value" : "sad",
+                        "checked" : true
+                },
+                {
+                        "value" : "irritated",
+                        "checked" : true
+                },
+                {
+                        "value" : "angry",
+                        "checked" : true
+                }
+        ],
+        "sentiment" : 36
+},
+{
+        "_id" : `ObjectId("5b4cf12b2a1c2a6f816bc831")`,
+        "input" : "That's heart-breaking",
+        "__v" : 0,
+        "trained" : true,
+        "moods" : [
+                {
+                        "value" : "sad",
+                        "checked" : true
+                }
+        ],
+        "sentiment" : 18
+},
+{
+        "_id" : `ObjectId("5b4cf1542a1c2a6f816bc9bc")`,
+        "input" : "That's heart-warming",
+        "__v" : 0,
+        "trained" : true,
+        "moods" : [
+                {
+                        "value" : "happy",
+                        "checked" : true
+                },
+                {
+                        "value" : "grateful",
+                        "checked" : true
+                }
+        ],
+        "sentiment" : 84
+},
+{
+        "_id" : `ObjectId("5b4cf1852a1c2a6f816bcb61")`,
+        "input" : "Devastating!",
+        "__v" : 0,
+        "trained" : true,
+        "moods" : [
+                {
+                        "value" : "sad",
+                        "checked" : true
+                },
+                {
+                        "value" : "irritated",
+                        "checked" : true
+                },
+                {
+                        "value" : "excited",
+                        "checked" : true
+                },
+                {
+                        "value" : "angry",
+                        "checked" : true
+                }
+        ],
+        "sentiment" : 16
+},
+{
+        "_id" : `ObjectId("5b4cf5bc2a1c2a6f816bf4d8")`,
+        "input" : "Let's schedule a meeting",
+        "__v" : 0,
+        "trained" : true,
+        "moods" : [
+                {
+                        "value" : "neutral",
+                        "checked" : true
+                }
+        ],
+        "sentiment" : 50
+},
+{
+        "_id" : `ObjectId("5b4cf5d12a1c2a6f816bf5b5")`,
+        "input" : "let's have lunch!",
+        "__v" : 0,
+        "trained" : true,
+        "moods" : [
+                {
+                        "value" : "happy",
+                        "checked" : true
+                },
+                {
+                        "value" : "excited",
+                        "checked" : true
+                },
+                {
+                        "value" : "neutral",
+                        "checked" : true
+                }
+        ],
+        "sentiment" : 90
+},
+{
+        "_id" : `ObjectId("5b4cf5f62a1c2a6f816bf72a")`,
+        "input" : "i think i love you",
+        "__v" : 0,
+        "trained" : true,
+        "moods" : [
+                {
+                        "value" : "happy",
+                        "checked" : true
+                },
+                {
+                        "value" : "grateful",
+                        "checked" : true
+                }
+        ],
+        "sentiment" : 85
+},
+{
+        "_id" : `ObjectId("5b4cf6142a1c2a6f816bf87f")`,
+        "input" : "i think i love you!",
+        "__v" : 0,
+        "trained" : true,
+        "moods" : [
+                {
+                        "value" : "happy",
+                        "checked" : true
+                },
+                {
+                        "value" : "excited",
+                        "checked" : true
+                },
+                {
+                        "value" : "grateful",
+                        "checked" : true
+                }
+        ],
+        "sentiment" : 99
+},
+{
+        "_id" : `ObjectId("5b4cf6462a1c2a6f816bfa89")`,
+        "input" : "i don't think i can make it",
+        "__v" : 0,
+        "trained" : true,
+        "moods" : [
+                {
+                        "value" : "sad",
+                        "checked" : true
+                },
+                {
+                        "value" : "irritated",
+                        "checked" : true
+                }
+        ],
+        "sentiment" : 37
+},
+{
+        "_id" : `ObjectId("5b4cf6582a1c2a6f816bfb3b")`,
+        "input" : "that makes me sad",
+        "__v" : 0,
+        "trained" : true,
+        "moods" : [
+                {
+                        "value" : "sad",
+                        "checked" : true
+                }
+        ],
+        "sentiment" : 20
+},
+{
+        "_id" : `ObjectId("5b4cf66b2a1c2a6f816bfbf2")`,
+        "input" : "that makes me mad",
+        "__v" : 0,
+        "trained" : true,
+        "moods" : [
+                {
+                        "value" : "irritated",
+                        "checked" : true
+                },
+                {
+                        "value" : "angry",
+                        "checked" : true
+                }
+        ],
+        "sentiment" : 10
+},
+{
+        "_id" : `ObjectId("5b4cf68c2a1c2a6f816bfd30")`,
+        "input" : "that makes me angry",
+        "__v" : 0,
+        "trained" : true,
+        "moods" : [
+                {
+                        "value" : "irritated",
+                        "checked" : true
+                },
+                {
+                        "value" : "angry",
+                        "checked" : true
+                }
+        ],
+        "sentiment" : 5
+},
+{
+        "_id" : `ObjectId("5b4cf6ab2a1c2a6f816bfe62")`,
+        "input" : "that's irritating",
+        "__v" : 0,
+        "trained" : true,
+        "moods" : [
+                {
+                        "value" : "irritated",
+                        "checked" : true
+                }
+        ],
+        "sentiment" : 19
+},
+{
+        "_id" : `ObjectId("5b4cf6c32a1c2a6f816bff3b")`,
+        "input" : "that's so irritating",
+        "__v" : 0,
+        "trained" : true,
+        "moods" : [
+                {
+                        "value" : "irritated",
+                        "checked" : true
+                },
+                {
+                        "value" : "angry",
+                        "checked" : true
+                }
+        ],
+        "sentiment" : 9
+},
+{
+        "_id" : `ObjectId("5b4cf6da2a1c2a6f816c001a")`,
+        "input" : "that's infuriating",
+        "__v" : 0,
+        "trained" : true,
+        "moods" : [
+                {
+                        "value" : "sad",
+                        "checked" : true
+                },
+                {
+                        "value" : "irritated",
+                        "checked" : true
+                },
+                {
+                        "value" : "angry",
+                        "checked" : true
+                }
+        ],
+        "sentiment" : 5
+},
+{
+        "_id" : `ObjectId("5b4cf6f52a1c2a6f816c0121")`,
+        "input" : "that's infuriating!",
+        "__v" : 0,
+        "trained" : true,
+        "moods" : [
+                {
+                        "value" : "sad",
+                        "checked" : true
+                },
+                {
+                        "value" : "irritated",
+                        "checked" : true
+                },
+                {
+                        "value" : "excited",
+                        "checked" : true
+                },
+                {
+                        "value" : "angry",
+                        "checked" : true
+                }
+        ],
+        "sentiment" : 0
 }
 ]

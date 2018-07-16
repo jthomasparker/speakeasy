@@ -239,6 +239,8 @@ const trainSpecific = (thisClassifier, classifierName, filepath) => {
 }
 
 const trainMoods = () => {
+    moodClassifier.restore('./moodClassifier.json')
+    customSentimentClassifier.restore('./customSentiment.json')
         for(let i = 0; i < moodData.length; i++){
             if(!moodData[i].trained){
                 let sentiment = moodData[i].sentiment / 100
