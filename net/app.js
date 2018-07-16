@@ -7,11 +7,14 @@ const netFiles = [
     './net/trainedNets/nine.json', './net/trainedNets/ten.json', './net/trainedNets/twitterOne.json',
     './net/trainedNets/twitterTwo.json', './net/trainedNets/twitterThree.json', './net/trainedNets/twitterFour.json', './net/trainedNets/twitterFive.json'
 ]
+const moodClassifer = new AsyncClassifier()
+
 
 
 module.exports = {
     getSentiment: (req, res) => {
         console.log(req.body)
+        moodClassifer.restore('./net/trainedNets/moodClassifier.json')
         let userInput = req.body.userInput
         let netSentiment;
         let adjustedNetSentiment;
@@ -45,10 +48,14 @@ module.exports = {
         sentimentResult = sentiment.analyze(userInput)
         console.log(sentimentResult)
         sentimentNpm = (sentimentResult.comparative + 5) / 10
+
+        // get the mood
+        let moods = moodClassifer.getResult(userInput)
         let sentimentData = {
             neuralNetRating: netSentiment,
             adjustedNetRating: adjustedNetSentiment,
-            sentimentRating: sentimentNpm
+            sentimentRating: sentimentNpm,
+            moods: moods
         }
         res.json(sentimentData)
     }
