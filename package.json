@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "axios": "^0.16.2",
+    "bcrypt": "^3.0.0",
     "body-parser": "^1.17.2",
     "brain.js": "^1.2.2",
     "cookie-parser": "^1.4.3",
