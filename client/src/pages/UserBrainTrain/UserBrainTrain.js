@@ -3,15 +3,18 @@ import Header from "../../components/Header";
 import NavBar from '../../components/NavBar';
 import RangeSlider from "../../components/RangeSlider";
 import AddedTable from "../../components/AddedTable";
-import API from "../../utils/API"
+import API from "../../utils/API";
+import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
+import "./UserBrainTrain.css";
 
 class UserBrainTrain extends Component {
   state = {
     userInput: "",
-    userClassification: "",    
+    userClassification: "",
     userAdded: [],
-    userTestInput: "" 
+    userTestInput: ""
   }
+
 
   handleInputChange = event => {
     // alert(event.target.name + " " + event.target.value);
@@ -22,9 +25,11 @@ class UserBrainTrain extends Component {
   }
 
   handleDataStage = event => {
-    this.setState({ userAdded: [...this.state.userAdded, 
-      {input: this.state.userInput, classification: this.state.userClassification}]});
-      
+    this.setState({
+      userAdded: [...this.state.userAdded,
+      { input: this.state.userInput, classification: this.state.userClassification }]
+    });
+
   }
 
   getstate = event => {
@@ -74,7 +79,7 @@ class UserBrainTrain extends Component {
       .then(res => {
         console.log(res)
         let moods = res.data.moods.map(mood => mood.value)
-        this.setState({          
+        this.setState({
           userInput: "",
           sentimentValue: 0,
           moods: [
@@ -110,9 +115,40 @@ class UserBrainTrain extends Component {
         })
       })
   }
+  componentDidMount() {
+    // Calculate the height
+    let height = 300; // Only simluated here!
 
+    // Set the height
+    this.setState({ tableHeight: height + "px" });
+
+    API.getUser()
+      .then(res => window.location = res.data.urlPath)
+  }
+
+  onDeleteRow = row => {
+    let toAdd = [];
+    toAdd = this.state.userAdded.filter((data) => {
+      return data.input !== row[0] && data.classification !== row[1];
+    });
+
+    this.setState({
+      userAdded: toAdd
+    });
+  }
 
   render() {
+
+    const options = {
+      afterDeleteRow: this.onDeleteRow  // A hook for after droping rows.
+    };
+
+    // If you want to enable deleteRow, you must enable row selection also.
+    const selectRowProp = {
+      mode: 'checkbox',
+      clickToSelect: true
+    };
+
     return (
       <div className="App">
         <Header />
@@ -157,8 +193,13 @@ class UserBrainTrain extends Component {
                 </button>
             </div>
             <div className="col-md-4">
-            <h4>Added</h4>
-              <AddedTable />
+              <h4>Added</h4>
+              <BootstrapTable data={this.state.userAdded} deleteRow={true} selectRow={selectRowProp}
+                options={options} striped hover version='4'
+                maxHeight={this.state.tableHeight}>
+                <TableHeaderColumn isKey dataField='input'>Input</TableHeaderColumn>
+                <TableHeaderColumn dataField='classification'>Classification</TableHeaderColumn>
+              </BootstrapTable>
               <br />
               <form>
                 <button type="submit"

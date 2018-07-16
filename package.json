@@ -28,6 +28,7 @@
     "moment": "^2.22.2",
     "mongoose": "^5.0.17",
     "natural": "^0.6.1",
+    "react-bootstrap-table": "^4.3.1",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
     "sentiment": "^5.0.1"

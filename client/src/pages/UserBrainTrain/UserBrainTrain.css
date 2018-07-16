@@ -1,0 +1,8 @@
+.table th, .table td{
+    padding: .5rem !important;
+}
+.react-bs-table table td, .react-bs-table table th {
+    overflow: hidden;
+    white-space: initial !important;
+    text-overflow: ellipsis;
+}

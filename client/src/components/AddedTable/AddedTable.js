@@ -1,23 +1,13 @@
 import React from "react";
+import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 
-const AddedTable = props => (
+const AddedTable = () => (
     <div>
-        <table className="table table-hover">
-    <thead>
-        <tr>
-        <th scope="col">Input</th>
-        <th scope="col">Classification</th>
-        </tr>
-    </thead>
-    <tbody>
-        {/* for loop to add date */}
-        <tr className="table-light">
-        <th scope="row">Light</th>
-        <td>Column content</td>
-        <td>remove</td>
-        </tr>
-    </tbody>
-</table> 
+        <BootstrapTable striped hover>
+            <TableHeaderColumn isKey dataField='props.input'>Input</TableHeaderColumn>
+            <TableHeaderColumn dataField='props.classification'>Classification</TableHeaderColumn>
+            {/* <TableHeaderColumn dataField='price'>Product Price</TableHeaderColumn> */}
+        </BootstrapTable>
     </div>
 )
 
