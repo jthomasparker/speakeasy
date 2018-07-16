@@ -10,7 +10,7 @@ const Header = props => (
                 <h5>Sentiment Analyzer</h5>
             </div>
             <div className="col-md-6 profile-info">
-                <a href={"#"}><br />Log in</a>
+                <a className="headerLink" href={"#"}><br />Log in</a>
                 <img className="profilePic" src={prof} alt={"profile-pic"} />
             </div>
 

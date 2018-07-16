@@ -151,7 +151,7 @@ class UserBrainTrain extends Component {
 
     return (
       <div className="App">
-        <Header />
+        <NavBar />
         <div className="container">
           <div className="row">
             <h2>Train Your Brain</h2>
