@@ -241,6 +241,14 @@ const trainSpecific = (thisClassifier, classifierName, filepath) => {
 const trainMoods = () => {
     moodClassifier.restore('./moodClassifier.json')
     customSentimentClassifier.restore('./customSentiment.json')
+    console.log("I love you",customSentimentClassifier.getTopResult("I love you"))
+    console.log("I hate you",customSentimentClassifier.getTopResult("I hate you"))
+    console.log("I love that",customSentimentClassifier.getTopResult("I love that"))
+    console.log("I hate that",customSentimentClassifier.getTopResult("I hate that"))
+    console.log("I love you",moodClassifier.getResult("I love you"))
+    console.log("I hate you",moodClassifier.getResult("I hate you"))
+    console.log("I love that",moodClassifier.getResult("I love that"))
+    console.log("I hate that",moodClassifier.getResult("I hate that"))
         for(let i = 0; i < moodData.length; i++){
             if(!moodData[i].trained){
                 let sentiment = moodData[i].sentiment / 100
@@ -262,6 +270,8 @@ const trainMoods = () => {
             console.log("I hate that",customSentimentClassifier.getTopResult("I hate that"))
             customSentimentClassifier.save('./customSentiment.json')
             console.log("Custom Classifier done")
+            trainTwitter(classifierFour, 4, './amazonFour.json', four)
+            trainTwitter(classifierFive, 5, './amazonFive.json', five)
         })
         console.log("Mood Classifier training...")
         moodClassifier.train().then(res => {
@@ -272,6 +282,9 @@ const trainMoods = () => {
             console.log("I hate that",moodClassifier.getResult("I hate that"))
             moodClassifier.save('./moodClassifier.json')
             console.log("Mood Classifier done")
+            trainTwitter(classifierOne, 1, './amazonOne.json', one)
+    trainTwitter(classifierTwo, 2, './amazonTwo.json', two)
+    trainTwitter(classifierThree, 3, './amazonThree.json', three)
         })
 }
 
@@ -292,12 +305,13 @@ const start = () => {
     classifierThree.restore('./amazonThree.json')
     classifierFour.restore('./amazonFour.json')
     classifierFive.restore('./amazonFive.json')
-    db.Trainer.find().then(res => console.log(res))
-    trainTwitter(classifierOne, 1, './amazonOne.json', one)
+    db.Trainer.find().then(res => console.log(res))***/
+    trainMoods()
+    /*trainTwitter(classifierOne, 1, './amazonOne.json', one)
     trainTwitter(classifierTwo, 2, './amazonTwo.json', two)
     trainTwitter(classifierThree, 3, './amazonThree.json', three)
     trainTwitter(classifierFour, 4, './amazonFour.json', four)
-    trainTwitter(classifierFive, 5, './amazonFive.json', five) ******/
+    trainTwitter(classifierFive, 5, './amazonFive.json', five)*/
    /* classifierOne.restore('../net/trainedNets/twitterOne.json')
     classifierTwo.restore('../net/trainedNets/twitterTwo.json')
     classifierThree.restore('../net/trainedNets/twitterThree.json')
@@ -311,7 +325,7 @@ const start = () => {
    // let thisClassifier = new AsyncClassifier({autoTrain: false, autoTrainThreshold: 2000})
   //  console.log(thisClassifier.config)
     
-trainMoods()
+
 
 }
 
