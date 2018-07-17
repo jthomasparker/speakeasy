@@ -7,6 +7,12 @@ const netFiles = [
     './net/trainedNets/nine.json', './net/trainedNets/ten.json', './net/trainedNets/twitterOne.json',
     './net/trainedNets/twitterTwo.json', './net/trainedNets/twitterThree.json', './net/trainedNets/twitterFour.json', './net/trainedNets/twitterFive.json'
 ]
+
+const amazonNetFiles = [
+    './net/trainedNets/amazonOne.json', './net/trainedNets/amazonTwo.json', './net/trainedNets/amazonThree.json', 
+    './net/trainedNets/amazonFour.json', './net/trainedNets/amazonFive.json'
+] 
+
 const moodClassifer = new AsyncClassifier()
 const customClassifier = new AsyncClassifier()
 
@@ -31,6 +37,14 @@ module.exports = {
             return result
         })
         console.log(resultsArr)
+        let amazonResult = 
+            amazonNetFiles.map(filePath => {
+                let classifier = new AsyncClassifier()
+                classifier.restore(filePath)
+                let result = classifier.getTopResult(userInput)
+                return result
+            })
+            console.log("amazonResult\n", amazonResult)
         // sort the resultsArr to get min/max
         let sortedResults = resultsArr.sort((a, b) => {
             return b.confidence - a.confidence
@@ -60,8 +74,11 @@ module.exports = {
             adjustedNetRating: adjustedNetSentiment,
             sentimentNpmRating: sentimentNpm,
             customSentiment: customSentiment.confidence,
-            moods: moods
+            moods: moods,
+            allResults: resultsArr,
+            amazonResults: amazonResult
         }
+        console.log(sentimentData)
         res.json(sentimentData)
     }
 

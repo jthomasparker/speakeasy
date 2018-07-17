@@ -69,7 +69,7 @@ class Trainer extends Component {
     this.setState({
       moods: updatedMoods
     })
-    console.log(this.state)
+ //   console.log(this.state)
 
   }
 
