@@ -22,6 +22,7 @@
     "axios": "^0.16.2",
     "body-parser": "^1.17.2",
     "brain.js": "^1.2.2",
+    "cookie-parser": "^1.4.3",
     "express": "^4.15.4",
     "if-env": "^1.0.4",
     "jsonfile": "^4.0.0",
