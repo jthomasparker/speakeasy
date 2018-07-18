@@ -31,7 +31,6 @@ class NavBar extends React.Component {
 
     render() {
         return (
-            <Router>
                 <div className="App-header row">
                     <Navbar dark color="blue-grey lighten-5" expand="md" scrolling>
                         <div className="col-md-3">
@@ -40,13 +39,13 @@ class NavBar extends React.Component {
                                 <h5>Sentiment Analyzer</h5>
                             </NavbarBrand>
                         </div>
-                        <div className="col-md-4">
+                        <div className="col-md-7">
                         {!this.state.isWideEnough && <NavbarToggler onClick={this.onClick} />}
                         <Collapse isOpen={this.state.collapse} navbar>
                             <NavbarNav left>
-                                {/* <NavItem>
-                                    <NavLink to="/">Analyzer</NavLink>
-                                </NavItem> */}
+                                <NavItem>
+                                    <NavLink to="/analyzer">Analyzer</NavLink>
+                                </NavItem>
                                 <NavItem>
                                     <NavLink to="/braintrain">Your Brain</NavLink>
                                 </NavItem>
@@ -59,12 +58,11 @@ class NavBar extends React.Component {
                             </NavbarNav>                            
                         </Collapse>
                         </div>
-                        <div className="col-md-5 profile-info">
+                        <div className="col-md-2 profile-info">
                             <img className="profilePic" src={prof} alt={"profile-pic"} />
                         </div>
                     </Navbar>
                 </div>
-            </Router>
         );
     }
 }
