@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const userController = require('../../controllers/userController')
 
 
 // /braintrain/
@@ -15,5 +16,15 @@ router.get('/', (req, res) => {
         })
     }
 })
+
+router.route('/:userId/create')
+    .post(userController.createNet)
+
+router.route('/:userId/train')
+    .post(userController.trainNet)
+
+router.route('/:userId/result')
+    .post(userController.getUserNetResult)
+
 
 module.exports = router;

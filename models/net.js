@@ -2,9 +2,9 @@ const mongoose = require("mongoose")
 const Schema = mongoose.Schema;
 
 const netSchema = new Schema({
-    _creator: { type: Number, ref: 'User'},
+    _userId: { type: Schema.Types.ObjectId, ref: 'User'},
     name: { type: String, required: true},
-    netData: { type: Object, required: true}
+    netData: { type: Object }
 })
 
 const Net = mongoose.model("Net", netSchema);
