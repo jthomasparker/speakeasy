@@ -38,7 +38,7 @@ class Analyzer extends Component {
   render() {
     return (
       <div className="App">
-        <Header />
+      <NavBar />
         <div className="container">
           <div className="row">
             <div className="col-md-5">
