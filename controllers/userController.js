@@ -20,8 +20,8 @@ module.exports = {
                 if(dbNet.netData){
                     userNet.restore(dbNet.netData)
                 }
-                trainingData.map(datum => {
-                    userNet.addDefinition(datum.input, datum.output)
+                trainingData.map(dataObj => {
+                    userNet.addDefinition(dataObj.input, dataObj.output)
                 })
                 userNet.train()
                     .then(trainingRes => {
@@ -53,8 +53,8 @@ module.exports = {
             .catch(err => res.json({error: err}))
     },
     getUserNetResult: (req, res) => {
-        let userInput = req.userInput
-        db.Net.findById(netId)
+        let userInput = req.body.userInput
+        db.Net.findById(req.body.netId)
             .then(dbNet => {
                 let userNet = new AsyncClassifier()
                 userNet.restore(dbNet.netData)

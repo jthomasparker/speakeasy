@@ -7,7 +7,7 @@ router.get('/', (req, res) => {
     if(req.user) {
         res.json({
             userData: req.user,
-            urlPath: '/braintrain/' + req.user.user.userId
+            urlPath: '/braintrain/'// + req.user.user.userId
         })
     } else {
         res.json({
@@ -17,13 +17,13 @@ router.get('/', (req, res) => {
     }
 })
 
-router.route('/:userId/create')
+router.route('/create')
     .post(userController.createNet)
 
-router.route('/:userId/train')
+router.route('/train')
     .post(userController.trainNet)
 
-router.route('/:userId/result')
+router.route('/result')
     .post(userController.getUserNetResult)
 
 
