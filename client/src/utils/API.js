@@ -22,6 +22,13 @@ export default {
                 Authorization: "Bearer " + cookie.load('jwtAuthToken')
             }
         }
-    )
-    }
+        )
+    },
+
+    createNet: data => axios.post('/create', data),
+
+    trainNet: data => axios.post('/train', data),
+
+    getResult: data => axios.post('/result', data)
+
 }

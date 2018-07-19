@@ -49,7 +49,7 @@ class Login extends Component {
             .then(res => {
                 console.log(res)
                 if(res.data.userId){
-                    window.location = '/braintrain/' + res.data.userId
+                    window.location = '/braintrain/'// + res.data.userId
                 } else {
                     this.setState({
                         status: res.data.status,
@@ -63,7 +63,7 @@ class Login extends Component {
             .then(res => {
                 console.log(res)
                 if(res.data.userId){
-                    window.location = '/braintrain/' + res.data.userId
+                    window.location = '/braintrain/'// + res.data.userId
                 } else {
                     this.setState({
                         status: res.data.status,
