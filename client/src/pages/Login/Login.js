@@ -78,7 +78,7 @@ class Login extends Component {
     render() {
         return (
             <div className="Login">
-                <Header />
+                <NavBar />
                 <div className="container">
                 <div className="row">
                 <div className="col-sm"></div>
