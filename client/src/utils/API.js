@@ -24,7 +24,7 @@ export default {
         }
         )
     },
-
+    
     createNet: data => axios.post('/create', data),
 
     trainNet: data => axios.post('/train', data),

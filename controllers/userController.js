@@ -3,15 +3,30 @@ const AsyncClassifier = require('../async-classifier/async-classifier.js')
 
 module.exports = {
     createNet: (req, res) => {
+        console.log(req.body, req.user.user.userId)
         db.Net
             .create({
                 _userId: req.user.user.userId,
                 name: req.body.netName
             })
-            .then(dbNet => res.json(dbNet))
+            .then(dbNet => {
+                db.User
+                    .findByIdAndUpdate(dbNet._userId,
+                    { $push: { nets: dbNet._id }})
+                    .then(dbUser => {
+                        res.json({
+                            userId: dbUser._id,
+                            userName: dbUser.username,
+                            netId: dbNet._id,
+                            netName: dbNet.name
+                        })
+                    })
+                
+            })
             .catch(err => res.status(422).json(err))
     },
     trainNet: (req, res) => {
+        console.log(req.body)
         const trainingData = req.body.trainingData
         let userNet = new AsyncClassifier()
         db.Net
@@ -53,6 +68,7 @@ module.exports = {
             .catch(err => res.json({error: err}))
     },
     getUserNetResult: (req, res) => {
+        console.log(req.body)
         let userInput = req.body.userInput
         db.Net.findById(req.body.netId)
             .then(dbNet => {
