@@ -89,32 +89,12 @@ module.exports = {
             })
 
     },
-    // probably don't need
-    saveNet: (req, res) => {
-        db.Net
-        .findOneAndUpdate(
-            {
-                _id: req.body.netId
-            },
-            req.body,
-            {
-                upsert: true, 
-                new: true, 
-                runValidators: true
-            },
-            (err, result) => {
-                if(err) throw err
-                res.json(result)
-            }
-        )
-    },
-
+    
     getAllUserNets: (req, res) => {
+        let userId = req.user.user.userId
         db.User
-            .findOne({ _id: req.userId })
-
-            //commented out - probably don't want to 'populate' since we just need id/name
-        /*    .populate('nets')
+            .findOne({ _id: userId })
+            .populate('nets')
             .exec((err, user) => {
                 if(err){
                     res.json({
@@ -122,9 +102,16 @@ module.exports = {
                         error: err
                     })
                 }
-                res.json({
-                    netId: user.nets
+                let userNets =
+                user.nets.map(net => {
+                    return {
+                        netId: net._id,
+                        netName: net.name
+                    }
                 })
-            }) */
+                res.json({
+                    nets: userNets
+                })
+            })
     }
 }

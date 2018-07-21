@@ -8,6 +8,7 @@ import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 
 
 class Trainer extends Component {
+  
   state = {
     brainName: "",
     input: "",
@@ -55,6 +56,11 @@ class Trainer extends Component {
           checked: false
         }
       ]
+  }
+
+  componentDidMount = () => {
+    API.loadNets()
+      .then(res => console.log(res))
   }
 
   handleInputChange = event => {
