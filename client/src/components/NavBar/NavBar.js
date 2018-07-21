@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { Navbar, NavbarBrand, NavbarNav, NavbarToggler, Collapse, NavItem, NavLink } from 'mdbreact';
 import { BrowserRouter as Router } from 'react-router-dom';
+import  UserBrainsDropdown from "../../components/UserBrainsDropdown";
+import UserBrainItem from "../../components/UserBrainItem";
+
 import './NavBar.css';
 
 import prof from './JAZ.PNG';
@@ -11,7 +14,8 @@ class NavBar extends React.Component {
         this.state = {
             collapse: false,
             isWideEnough: false,
-            dropdownOpen: false
+            dropdownOpen: false,
+            userBrains: [{name: "Test", id: "1"}, {name: "Test2", id: "2"}]
         };
         this.onClick = this.onClick.bind(this);
         this.toggle = this.toggle.bind(this);
@@ -47,8 +51,8 @@ class NavBar extends React.Component {
                                     <NavLink to="/analyzer">Analyzer</NavLink>
                                 </NavItem>
                                 <NavItem>
-                                    <NavLink to="/braintrain">Your Brain</NavLink>
-                                </NavItem>
+                                    <NavLink to="/braintrain">Your Brains</NavLink>
+                                </NavItem>                                
                                 <NavItem>
                                     <NavLink to="/trainer">Our Brain</NavLink>
                                 </NavItem>
@@ -62,6 +66,16 @@ class NavBar extends React.Component {
                             <img className="profilePic" src={prof} alt={"profile-pic"} />
                         </div>
                     </Navbar>
+                    {/* <UserBrainsDropdown>
+                    {this.state.userBrains.map(brain => {
+                        return(
+                            <UserBrainItem
+                            name={brain.name}
+                            id={brain.id}
+                            />
+                        );
+                    })}
+                    </UserBrainsDropdown>     */}
                 </div>
         );
     }

@@ -3,16 +3,19 @@ import Header from "../../components/Header";
 import NavBar from '../../components/NavBar';
 import RangeSlider from "../../components/RangeSlider";
 import AddedTable from "../../components/AddedTable";
+import CreateBrainModal from "../../components/CreateBrainModal";
 import API from "../../utils/API";
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import "./UserBrainTrain.css";
+import DropdownPage from "../../components/DropdownPage"
 
 class UserBrainTrain extends Component {
   state = {
     userInput: "",
     userClassification: "",
     userAdded: [],
-    userTestInput: ""
+    userTestInput: "",
+    userBrains: [{name: "Test", id: "1"}, {name: "Test2", id: "2"}]
   }
 
 
@@ -136,7 +139,7 @@ class UserBrainTrain extends Component {
       userAdded: toAdd
     });
   }
-
+  
   render() {
 
     const options = {
@@ -155,6 +158,8 @@ class UserBrainTrain extends Component {
         <div className="container">
           <div className="row">
             <h2>Train Your Brain</h2>
+            {/* <CreateBrainModal /> */}   
+            <DropdownPage />         
           </div>
           <div className="row">
             <div className="col-md-5">
