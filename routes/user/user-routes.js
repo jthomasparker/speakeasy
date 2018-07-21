@@ -26,5 +26,8 @@ router.route('/train')
 router.route('/result')
     .post(userController.getUserNetResult)
 
+router.route('/load')
+    .get(userController.getAllUserNets)
+
 
 module.exports = router;

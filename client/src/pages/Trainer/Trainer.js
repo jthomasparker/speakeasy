@@ -3,11 +3,18 @@ import Header from "../../components/Header";
 import NavBar from '../../components/NavBar';
 import RangeSlider from "../../components/RangeSlider";
 import API from "../../utils/API"
+import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 
 
 
 class Trainer extends Component {
+  
   state = {
+    brainName: "",
+    input: "",
+    output: "",
+    netId: "",
+    netName: "",
     userInput: "",
     topMoodResult: "",
     secondMoodResult: "",
@@ -49,6 +56,11 @@ class Trainer extends Component {
           checked: false
         }
       ]
+  }
+
+  componentDidMount = () => {
+    API.loadNets()
+      .then(res => console.log(res))
   }
 
   handleInputChange = event => {
@@ -97,6 +109,44 @@ class Trainer extends Component {
           sentimentValue: value
       })
   }
+
+  createBrain = event => {
+    event.preventDefault()
+    let brainName = this.state.brainName
+    console.log(brainName)
+    API.createNet({
+      netName: brainName
+    })
+    .then(res => {
+      console.log(res)
+      this.setState({
+        netId: res.data.netId,
+        netName: res.data.netName
+      })
+    })
+  }
+
+  trainBrain = event => {
+    event.preventDefault()
+    let trainingData = [{
+      input: this.state.input,
+      output: this.state.output
+    }]
+    API.trainNet({
+      trainingData: trainingData,
+      netId: this.state.netId
+    })
+    .then(res => {
+      console.log(res)
+      API.getResult({
+        netId: this.state.netId,
+        userInput: this.state.userInput
+      }).then(result => console.log(result))
+    })
+
+  }
+
+  
 
   handleTrainSubmit = event => {
       event.preventDefault();
@@ -233,6 +283,53 @@ class Trainer extends Component {
           </div>
           <div className="row">
             <div className="col-12">
+              <h2>Create Brain Test</h2>
+              <form>
+              <FormGroup controlId="create" bsSize="large">
+                        <ControlLabel>Brain Name</ControlLabel>
+                        <FormControl
+                            value={this.state.brainName}
+                            onChange={this.handleInputChange}
+                            type="text"
+                            name="brainName"
+                            />
+                    </FormGroup>
+                    <FormGroup controlId="create" bsSize="large">
+                        <ControlLabel>Input</ControlLabel>
+                        <FormControl
+                            value={this.state.input}
+                            onChange={this.handleInputChange}
+                            type="text"
+                            name="input"
+                            />
+                    </FormGroup>
+                    <FormGroup controlId="create" bsSize="large">
+                        <ControlLabel>Classification</ControlLabel>
+                        <FormControl
+                            value={this.state.output}
+                            onChange={this.handleInputChange}
+                            type="text"
+                            name="output"
+                            />
+                    </FormGroup>
+                    <Button
+                      bsSize="sm"
+                      className="btn btn-primary"
+                      onClick={this.trainBrain}
+                      >
+                      Train Brain
+                      </Button>
+                    <Button
+                        
+                        id="createBtn"
+                        bsSize="sm"
+                        className="btn btn-primary"
+                        onClick={this.createBrain}
+                        >
+                        Create Brain
+                    </Button>
+              </form>
+
               <h2>Last Record Added/Updated:</h2>
               <p>Id: {this.state.lastRecord.id}</p>
               <p>Input: {this.state.lastRecord.input}</p>
