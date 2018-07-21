@@ -1,11 +1,16 @@
 const AsyncClassifier = require('../async-classifier/async-classifier.js')
 const Sentiment = require('sentiment')
 sentiment = new Sentiment();
-const netFiles = [
-    './net/trainedNets/one.json', './net/trainedNets/two.json', './net/trainedNets/three.json', './net/trainedNets/four.json',
-    './net/trainedNets/five.json', './net/trainedNets/six.json', './net/trainedNets/seven.json', './net/trainedNets/eight.json',
-    './net/trainedNets/nine.json', './net/trainedNets/ten.json', './net/trainedNets/twitterOne.json',
-    './net/trainedNets/twitterTwo.json', './net/trainedNets/twitterThree.json', './net/trainedNets/twitterFour.json', './net/trainedNets/twitterFive.json'
+const rtNetFiles = [
+    './net/trainedNets/one.json', './net/trainedNets/two.json', './net/trainedNets/three.json', 
+    './net/trainedNets/four.json', './net/trainedNets/five.json', './net/trainedNets/six.json', 
+    './net/trainedNets/seven.json', './net/trainedNets/eight.json', './net/trainedNets/nine.json', 
+    './net/trainedNets/ten.json'
+]
+
+const twitterNetFiles = [
+    './net/trainedNets/twitterOne.json', './net/trainedNets/twitterTwo.json', './net/trainedNets/twitterThree.json', 
+    './net/trainedNets/twitterFour.json', './net/trainedNets/twitterFive.json'
 ]
 
 const amazonNetFiles = [
@@ -16,12 +21,83 @@ const amazonNetFiles = [
 const moodClassifer = new AsyncClassifier()
 const customClassifier = new AsyncClassifier()
 
+let allNets = {
+    rtNets: [],
+    twitterNets: [],
+    amazonNets: []
+}
+
+
 
 
 module.exports = {
+    loadNets: () => {
+        allNets.rtNets = rtNetFiles.map(filePath => {
+            let classifier = new AsyncClassifier()
+            classifier.restore(filePath)
+            return classifier
+        })
+
+        allNets.twitterNets = twitterNetFiles.map(filePath => {
+            let classifier = new AsyncClassifier()
+            classifier.restore(filePath)
+            return classifier
+        })
+
+        allNets.amazonNets = amazonNetFiles.map(filePath => {
+            let classifier = new AsyncClassifier()
+            classifier.restore(filePath)
+            return classifier
+        })
+
+        moodClassifer.restore('./net/trainedNets/moodClassifier.json')
+        customClassifier.restore('./net/trainedNets/customSentiment.json')
+
+    },
     getSentiment: (req, res) => {
         console.log(req.body)
-        moodClassifer.restore('./net/trainedNets/moodClassifier.json')
+        let userInput = req.body.userInput
+        let allResults = {}
+        let rtSum = 0
+        let twitterSum = 0
+        let amazonSum = 0
+        let totalSum = 0
+        allResults.rtResults = allNets.rtNets.map(classifier => {
+            let result = classifier.getTopResult(userInput)
+            rtSum += result.confidence
+            return result.confidence
+        })
+
+        allResults.twitterResults = allNets.twitterNets.map(classifier => {
+            let result = classifier.getTopResult(userInput)
+            twitterSum += result.confidence
+            return result.confidence
+        })
+
+        allResults.amazonResults = allNets.amazonNets.map(classifier => {
+            let result = classifier.getTopResult(userInput)
+            amazonSum += result.confidence
+            return result.confidence
+        })
+
+        
+        let custom = customClassifier.getTopResult(userInput)
+        allResults.customNet = custom.confidence
+        allResults.moods = moodClassifer.getResult(userInput)
+
+        let sentimentResult = sentiment.analyze(userInput)
+        allResults.sentimentResult = (sentimentResult.comparative + 5) / 10
+        //console.log(rtSum, twitterSum, amazonSum, custom.confidence)
+        totalSum = rtSum + twitterSum + amazonSum + custom.confidence
+        allResults.allNetAvg = totalSum / (1 + allResults.rtResults.length + allResults.twitterResults.length + allResults.amazonResults.length)
+        allResults.rtAvg = rtSum / allResults.rtResults.length
+        allResults.twitterAvg = twitterSum / allResults.twitterResults.length
+        allResults.amazonAvg = amazonSum / allResults.amazonResults.length
+
+        res.json(allResults)
+
+        
+      /*  moodClassifer.restore('./net/trainedNets/moodClassifier.json')
         customClassifier.restore('./net/trainedNets/customSentiment.json')
         let userInput = req.body.userInput
         let netSentiment;
@@ -79,7 +155,7 @@ module.exports = {
             amazonResults: amazonResult
         }
         console.log(sentimentData)
-        res.json(sentimentData)
+        res.json(sentimentData) */
     }
 
 }
