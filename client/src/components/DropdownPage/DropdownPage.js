@@ -5,7 +5,7 @@ class DropdownPage extends React.Component {
   render() {
     return (
       <Dropdown>
-      <DropdownToggle caret color="primary">
+      <DropdownToggle caret color="success">
       Material dropdown
       </DropdownToggle>
         <DropdownMenu>
