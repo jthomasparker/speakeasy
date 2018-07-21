@@ -66,7 +66,7 @@ class NavBar extends React.Component {
                             <img className="profilePic" src={prof} alt={"profile-pic"} />
                         </div>
                     </Navbar>
-                    {/* <UserBrainsDropdown>
+                    <UserBrainsDropdown>
                     {this.state.userBrains.map(brain => {
                         return(
                             <UserBrainItem
@@ -75,7 +75,7 @@ class NavBar extends React.Component {
                             />
                         );
                     })}
-                    </UserBrainsDropdown>     */}
+                    </UserBrainsDropdown>    
                 </div>
         );
     }
