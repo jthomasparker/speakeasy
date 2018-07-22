@@ -57,24 +57,48 @@ module.exports = {
     getSentiment: (req, res) => {
         console.log(req.body)
         let userInput = req.body.userInput
-        let allResults = {}
+        let allResults = {
+            allNets: {
+                description: "All of the trained nets combined"
+            },
+            rotTom: {
+                description: "Nets trained on Rotten Tomatoes movie reviews",
+                dataSetCredit: `'Recursive Deep Models for Semantic Compositionality Over a Sentiment Treebank', Richard Socher, Alex Perelygin, Jean Wu, Jason Chuang, Christopher Manning, Andrew Ng and Christopher Potts`
+            },
+            twitter: {
+                description: "Nets trained on Twitter data",
+                dataSetCredit: ""
+            },
+            reviews: {
+                description: "Nets trained on Amazon/IMDB/Yelp reviews",
+                dataSetCredit: `'From Group to Individual Labels using Deep Features', Kotzias et. al,. KDD 2015`
+            },
+            jaz: {
+                description: "A single net trained on input data speakeasy's creators",
+                dataSetCredit: "Josh Parker, Alexandra Peralta, Zarah Parker"
+            },
+            sentimentNpm: {
+                description: "Sentiment analysis from the Sentiment node package",
+                dataSetCredit: "https://github.com/thisandagain/sentiment"
+            } 
+        }
         let rtSum = 0
         let twitterSum = 0
         let amazonSum = 0
         let totalSum = 0
-        allResults.rtResults = allNets.rtNets.map(classifier => {
+        allResults.rotTom.data = allNets.rtNets.map(classifier => {
             let result = classifier.getTopResult(userInput)
             rtSum += result.confidence
             return result.confidence
         })
 
-        allResults.twitterResults = allNets.twitterNets.map(classifier => {
+        allResults.twitter.data = allNets.twitterNets.map(classifier => {
             let result = classifier.getTopResult(userInput)
             twitterSum += result.confidence
             return result.confidence
         })
 
-        allResults.amazonResults = allNets.amazonNets.map(classifier => {
+        allResults.reviews.data = allNets.amazonNets.map(classifier => {
             let result = classifier.getTopResult(userInput)
             amazonSum += result.confidence
             return result.confidence
@@ -82,17 +106,17 @@ module.exports = {
 
         
         let custom = customClassifier.getTopResult(userInput)
-        allResults.customNet = custom.confidence
-        allResults.moods = moodClassifer.getResult(userInput)
+        allResults.jaz.data = custom.confidence
+        allResults.jaz.moods = moodClassifer.getResult(userInput)
 
         let sentimentResult = sentiment.analyze(userInput)
-        allResults.sentimentResult = (sentimentResult.comparative + 5) / 10
+        allResults.sentimentNpm.data = (sentimentResult.comparative + 5) / 10
         //console.log(rtSum, twitterSum, amazonSum, custom.confidence)
         totalSum = rtSum + twitterSum + amazonSum + custom.confidence
-        allResults.allNetAvg = totalSum / (1 + allResults.rtResults.length + allResults.twitterResults.length + allResults.amazonResults.length)
-        allResults.rtAvg = rtSum / allResults.rtResults.length
-        allResults.twitterAvg = twitterSum / allResults.twitterResults.length
-        allResults.amazonAvg = amazonSum / allResults.amazonResults.length
+        allResults.allNets.avg = totalSum / (1 + allResults.rotTom.data.length + allResults.twitter.data.length + allResults.reviews.data.length)
+        allResults.rotTom.avg = rtSum / allResults.rotTom.data.length
+        allResults.twitter.avg = twitterSum / allResults.twitter.data.length
+        allResults.reviews.avg = amazonSum / allResults.reviews.data.length
 
         res.json(allResults)
 

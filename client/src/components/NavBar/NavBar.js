@@ -47,7 +47,7 @@ class NavBar extends React.Component {
                                     <NavLink to="/analyzer">Analyzer</NavLink>
                                 </NavItem>
                                 <NavItem>
-                                    <NavLink to="/braintrain">Your Brain</NavLink>
+                                    <NavLink to="/braintrain/">Your Brain</NavLink>
                                 </NavItem>
                                 <NavItem>
                                     <NavLink to="/trainer">Our Brain</NavLink>

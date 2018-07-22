@@ -17,7 +17,7 @@ const App = () => (
         <Route exact path='/analyzer' component={Analyzer} />
         <Route exact path='/trainer' component={Trainer} />
         <Route exact path='/login' component={Login} />
-        <Route exact path='/braintrain' component={UserBrainTrain} />
+        <Route exact path='/braintrain/' component={UserBrainTrain} />
       </Switch>
     </div>
   </Router>
