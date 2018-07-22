@@ -2,6 +2,7 @@
 import React from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import "./CreateBrainModal.css";
+import API from "../../utils/API";
 
 export default class CreateBrainModal extends React.Component {
   constructor(props) {
@@ -24,14 +25,26 @@ export default class CreateBrainModal extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-     }
+  let brainName = this.state.name
+  console.log(brainName)
+  API.createNet({
+    netName: brainName
+  })
+    .then(res => {
+      console.log(res)
+      this.setState({
+        netId: res.data.netId,
+        netName: res.data.netName
+      });
+      this.toggle();
+    })
+  }
 
 
   render() {
     return (
-
         <div>          
-        <Button color="success" onClick={this.toggle}>Create New Brain</Button>
+        <Button color="warning" onClick={this.toggle}>Create New Brain</Button>
         <Modal isOpen={this.state.modal}>
         <form onSubmit={this.handleSubmit}>
           <ModalHeader>Name Your New Brain</ModalHeader>

@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
 import Header from "../../components/Header";
 import NavBar from '../../components/NavBar';
-import RangeSlider from "../../components/RangeSlider";
-import AddedTable from "../../components/AddedTable";
 import CreateBrainModal from "../../components/CreateBrainModal";
 import API from "../../utils/API";
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import "./UserBrainTrain.css";
-import DropdownPage from "../../components/DropdownPage"
 
 class UserBrainTrain extends Component {
   state = {
@@ -32,7 +29,13 @@ class UserBrainTrain extends Component {
                 })
                 window.location = this.state.url
             }
-        })
+        });
+        API.loadNets().then(res => {console.log("nets? " + JSON.stringify(res))});
+
+        let height = 300; // Only simluated here!
+
+        // Set the height
+        this.setState({ tableHeight: height + "px" });
 }
 
   handleInputChange = event => {
@@ -134,28 +137,7 @@ class UserBrainTrain extends Component {
         })
       })
   }
-  componentDidMount() {
-    // Calculate the height
-    let height = 300; // Only simluated here!
 
-    // Set the height
-    this.setState({ tableHeight: height + "px" });
-
-    API.getUser()
-       .then(res => {
-           console.log(res)
-           if(res.data.urlPath !== '/braintrain/'){
-               this.setState({
-                   url: res.data.urlPath
-               })
-               window.location = this.state.url
-           }
-       })
-
-      // API.loadNets()
-      // .then(res => console.log(res))
-    
-  }
 
   onDeleteRow = row => {
     let toAdd = [];
@@ -184,10 +166,11 @@ class UserBrainTrain extends Component {
       <div className="App">
         <NavBar />
         <div className="container">
+        <div className="row center">        
+            <CreateBrainModal />     
+        </div>
           <div className="row">
             <h2>Train Your Brain</h2>
-            <CreateBrainModal />   
-            <DropdownPage />         
           </div>
           <div className="row">
             <div className="col-md-5">
@@ -219,17 +202,16 @@ class UserBrainTrain extends Component {
                 disabled={!(this.state.userInput) || !(this.state.userClassification)}>
                 Stage Training Data
                 </button>
-              <button type="submit"
+              {/* <button type="submit"
                 className="btn btn-primary"
                 onClick={this.getstate}>
                 Get State
-                </button>
+                </button> */}
             </div>
             <div className="col-md-4">
               <h4>Added</h4>
-              <BootstrapTable data={this.state.userAdded} deleteRow={true} selectRow={selectRowProp}
-                options={options} striped hover version='4'
-                maxHeight={this.state.tableHeight}>
+              <BootstrapTable maxHeight={this.state.tableHeight} data={this.state.userAdded} deleteRow={true} selectRow={selectRowProp}
+                options={options} striped hover version='4'>
                 <TableHeaderColumn isKey dataField='input'>Input</TableHeaderColumn>
                 <TableHeaderColumn dataField='classification'>Classification</TableHeaderColumn>
               </BootstrapTable>

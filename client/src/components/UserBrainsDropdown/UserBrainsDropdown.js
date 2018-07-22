@@ -4,7 +4,7 @@ import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'mdbreact'
 // UserBrainsDropdown renders a bootstrap list item
 const UserBrainsDropdown = props => (
     <Dropdown>
-        <DropdownToggle caret color="primary">
+        <DropdownToggle nav caret color="primary">
         Your Brains
         </DropdownToggle>
           <DropdownMenu>

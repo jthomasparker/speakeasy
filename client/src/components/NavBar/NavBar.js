@@ -3,11 +3,29 @@ import { Navbar, NavbarBrand, NavbarNav, NavbarToggler, Collapse, NavItem, NavLi
 import { BrowserRouter as Router } from 'react-router-dom';
 import  UserBrainsDropdown from "../../components/UserBrainsDropdown";
 import UserBrainItem from "../../components/UserBrainItem";
-import API from "../../utils/API"
+import API from "../../utils/API";
+import {DropdownItem} from 'mdbreact';
 
 import './NavBar.css';
 
 import prof from './JAZ.PNG';
+function BrainDropdown(props) {
+    if(props.userBrains.length > 1){
+        return(<UserBrainsDropdown>
+            {props.userBrains.map(brain => {
+                return(
+                    <UserBrainItem
+                    name={brain.name}
+                    key={brain.id}
+                    />
+                );
+            })}
+            </UserBrainsDropdown>);
+    }
+    return (<UserBrainsDropdown>
+        <DropdownItem href="/braintrain/">Create a Brain to Get Started</DropdownItem>
+        </UserBrainsDropdown>)
+}
 
 class NavBar extends React.Component {
     constructor(props) {
@@ -16,7 +34,8 @@ class NavBar extends React.Component {
             collapse: false,
             isWideEnough: false,
             dropdownOpen: false,
-            userBrains: []
+            userBrains: [],
+            currentBrain: ''
         };
         this.onClick = this.onClick.bind(this);
         this.toggle = this.toggle.bind(this);
@@ -32,7 +51,11 @@ class NavBar extends React.Component {
                         url: res.data.urlPath
                     })
                     window.location = this.state.url;
-                    API.loadNets().then(res => {console.log(res)})    ;
+                    API.loadNets().then(res => {console.log(res)});
+                    this.setState({
+                        userLoggedIn: true
+                    })
+                    console.log(this.state.userLoggedIn);
                 }
             });
     }
@@ -48,7 +71,7 @@ class NavBar extends React.Component {
             dropdownOpen: !this.state.dropdownOpen
         });
     }
-
+    
     render() {
         return (
                 <div className="App-header row">
@@ -67,13 +90,14 @@ class NavBar extends React.Component {
                                     <NavLink to="/analyzer/">Analyzer</NavLink>
                                 </NavItem>
                                 <NavItem>
-                                    <NavLink to="/braintrain/">Your Brain</NavLink>
+                                    <BrainDropdown userBrains={this.state.userBrains}/>
                                 </NavItem>
                                 <NavItem>
                                     <NavLink to="/trainer/">Our Brain</NavLink>
                                 </NavItem>
                                 <NavItem>
-                                    <NavLink to="/login/">Log In</NavLink>
+                                    <NavLink to="/login/">
+                                    {this.state.userLoggedIn ? 'Log Out' : 'Log In'}</NavLink>
                                 </NavItem>                                
                             </NavbarNav>                            
                         </Collapse>
@@ -82,16 +106,7 @@ class NavBar extends React.Component {
                             <img className="profilePic" src={prof} alt={"profile-pic"} />
                         </div>
                     </Navbar>
-                    <UserBrainsDropdown>
-                    {this.state.userBrains.map(brain => {
-                        return(
-                            <UserBrainItem
-                            name={brain.name}
-                            key={brain.id}
-                            />
-                        );
-                    })}
-                    </UserBrainsDropdown>    
+                    
                 </div>
         );
     }
