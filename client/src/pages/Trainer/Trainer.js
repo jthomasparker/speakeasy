@@ -93,7 +93,7 @@ class Trainer extends Component {
       })
         .then(res => {
           console.log(res)
-          let sentiment = Math.round(res.data.neuralNetRating * 100)
+          let sentiment = Math.round(res.data.allNetAvg * 100)
           this.setState({
             sentimentValue: sentiment,
             topMoodResult: `${res.data.moods[0].label} (${Math.round(res.data.moods[0].confidence * 100)}%)`,

@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const routes = require("./routes");
 const app = express();
 const PORT = process.env.PORT || 3001;
+const net = require('./net/app.js')
 
 // Define middleware here
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -19,6 +20,9 @@ app.use(routes);
 
 // Connect to the Mongo DB
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/speakeasy");
+
+//load default nets
+net.loadNets()
 
 // Start the API server
 app.listen(PORT, function() {
