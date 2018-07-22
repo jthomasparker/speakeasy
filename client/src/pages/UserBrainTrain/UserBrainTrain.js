@@ -12,9 +12,23 @@ class UserBrainTrain extends Component {
     userInput: "",
     userClassification: "",
     userAdded: [],
-    userTestInput: ""
+    userTestInput: "",
+    url: '/braintrain/'
   }
 
+  componentDidMount = () => {
+    // checks to see if the user is already authenticated
+    API.getUser()
+        .then(res => {
+            console.log(res)
+            if(res.data.urlPath !== '/braintrain/'){
+                this.setState({
+                    url: res.data.urlPath
+                })
+                window.location = this.state.url
+            }
+        })
+}
 
   handleInputChange = event => {
     // alert(event.target.name + " " + event.target.value);

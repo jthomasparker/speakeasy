@@ -5,6 +5,7 @@
   "proxy": "http://localhost:3001/",
   "dependencies": {
     "axios": "^0.18.0",
+    "mdbreact": "^4.6.0",
     "react": "^16.4.1",
     "react-bootstrap": "^0.32.1",
     "react-bootstrap-table": "^4.3.1",

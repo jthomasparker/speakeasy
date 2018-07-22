@@ -8,13 +8,27 @@ import API from "../../utils/API"
 class Analyzer extends Component {
   state = {
     userInput: "",
-    sentimentValue: 0
+    sentimentValue: 0,
+    topMood: {
+      mood: "",
+      confidence: ""
+    },
+    secondMood: {
+      mood: "",
+      confidence: ""
+    },
+    thirdMood: {
+      mood: "",
+      confidence: ""
+    },
+    displayResult: false
   }
 
   handleInputChange = event => {
     const { name, value } = event.target;
     this.setState({
-      [name]: value
+      [name]: value,
+      displayResult: false
     });
   }
 
@@ -26,9 +40,22 @@ class Analyzer extends Component {
       })
         .then(res => {
           console.log(res)
-          let sentiment = Math.round(res.data.neuralNetRating * 100)
+          let sentiment = Math.round(res.data.allNets.avg * 100)
           this.setState({
-            sentimentValue: sentiment
+            sentimentValue: sentiment,
+            displayResult: true,
+            topMood: {
+              mood: res.data.jaz.moods[0].label,
+              confidence: Math.round(res.data.jaz.moods[0].confidence * 100) + '%'
+            },
+            secondMood: {
+              mood: res.data.jaz.moods[1].label,
+              confidence: Math.round(res.data.jaz.moods[1].confidence * 100) + '%'
+            },
+            thirdMood: {
+              mood: res.data.jaz.moods[2].label,
+              confidence: Math.round(res.data.jaz.moods[2].confidence * 100) + '%'
+            }
           })
         })
     }
@@ -41,7 +68,7 @@ class Analyzer extends Component {
       <NavBar />
         <div className="container">
           <div className="row">
-            <div className="col-md-5">
+            <div className="col-md">
               <form>
                 <div className="form-group">
                 <label htmlFor="textInput">Enter text here</label>
@@ -62,11 +89,45 @@ class Analyzer extends Component {
                 </button>
               </form>
             </div>
-            <div className="col-md-2">
-              <h4>Sentiment Rating:</h4>
-              <h2>{this.state.sentimentValue}</h2>
+            <div className="col col-md-2">
+              {this.state.displayResult ? (
+              <div>
+             <ul className="list-group">
+                <div className="list-group-item list-group-item-action flex-column align-items-start">
+                  <div className="d-flex w-100 justify-content-between">
+                    <h4 className="mb-1 lead">Top 3 Moods</h4>
+                  </div>  
+                </div>
+                <li className="list-group-item d-flex justify-content-between align-items-center">
+                  {this.state.topMood.mood}
+                  <span className="badge badge-primary badge-pill">{this.state.topMood.confidence}</span>
+                </li>
+                <li className="list-group-item d-flex justify-content-between align-items-center">
+                  {this.state.secondMood.mood}
+                  <span className="badge badge-primary badge-pill">{this.state.secondMood.confidence}</span>
+                </li>
+                <li className="list-group-item d-flex justify-content-between align-items-center">
+                  {this.state.thirdMood.mood}
+                  <span className="badge badge-primary badge-pill">{this.state.thirdMood.confidence}</span>
+                </li>
+              </ul>
+              </div>
+              ) : (
+              <p className="lead">No Results</p>
+              )}
             </div>
-            <div className="col-md-5">
+            <div className="col-md">
+
+            <ul className="list-group mb-1">
+                <div className="list-group-item list-group-item-action flex-column align-items-start">
+                  <div className="d-flex w-100 justify-content-between">
+                    <h4 className="mb-1 lead">Sentiment</h4>
+                  </div>
+                </div>
+                <li className="list-group-item d-flex justify-content-between align-items-center">
+                  <center><h4 className="mb-1">{this.state.sentimentValue} / 100</h4></center>
+                </li>
+                </ul>
               <RangeSlider 
                 value={this.state.sentimentValue}
                 orientation="horizontal"
