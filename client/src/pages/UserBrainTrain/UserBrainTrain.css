@@ -6,3 +6,7 @@
     white-space: initial !important;
     text-overflow: ellipsis;
 }
+
+.center{
+    justify-content: center;
+}
