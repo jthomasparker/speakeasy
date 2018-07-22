@@ -15,7 +15,9 @@ class UserBrainTrain extends Component {
     userClassification: "",
     userAdded: [],
     userTestInput: "",
-    userBrains: [{name: "Test", id: "1"}, {name: "Test2", id: "2"}]
+    userBrains: [{name: "Test", id: "1"}, {name: "Test2", id: "2"}],
+    currentUserId: "",
+    currentUserBrain: ""
   }
 
 
@@ -125,8 +127,20 @@ class UserBrainTrain extends Component {
     // Set the height
     this.setState({ tableHeight: height + "px" });
 
-    // API.getUser()
-    //   .then(res => window.location = res.data.urlPath)
+    API.getUser()
+       .then(res => {
+           console.log(res)
+           if(res.data.urlPath !== '/braintrain/'){
+               this.setState({
+                   url: res.data.urlPath
+               })
+               window.location = this.state.url
+           }
+       })
+
+      // API.loadNets()
+      // .then(res => console.log(res))
+    
   }
 
   onDeleteRow = row => {
@@ -158,7 +172,7 @@ class UserBrainTrain extends Component {
         <div className="container">
           <div className="row">
             <h2>Train Your Brain</h2>
-            {/* <CreateBrainModal /> */}   
+            <CreateBrainModal />   
             <DropdownPage />         
           </div>
           <div className="row">

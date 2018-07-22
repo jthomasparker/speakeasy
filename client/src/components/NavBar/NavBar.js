@@ -3,6 +3,7 @@ import { Navbar, NavbarBrand, NavbarNav, NavbarToggler, Collapse, NavItem, NavLi
 import { BrowserRouter as Router } from 'react-router-dom';
 import  UserBrainsDropdown from "../../components/UserBrainsDropdown";
 import UserBrainItem from "../../components/UserBrainItem";
+import API from "../../utils/API"
 
 import './NavBar.css';
 
@@ -15,10 +16,25 @@ class NavBar extends React.Component {
             collapse: false,
             isWideEnough: false,
             dropdownOpen: false,
-            userBrains: [{name: "Test", id: "1"}, {name: "Test2", id: "2"}]
+            userBrains: []
         };
         this.onClick = this.onClick.bind(this);
         this.toggle = this.toggle.bind(this);
+    }
+
+    componentDidMount = () => {
+        // checks to see if the user is already authenticated
+        API.getUser()
+            .then(res => {
+                console.log(res)
+                if(res.data.urlPath !== '/braintrain/'){
+                    this.setState({
+                        url: res.data.urlPath
+                    })
+                    window.location = this.state.url;
+                    API.loadNets().then(res => {console.log(res)})    ;
+                }
+            });
     }
 
     onClick() {
@@ -48,16 +64,16 @@ class NavBar extends React.Component {
                         <Collapse isOpen={this.state.collapse} navbar>
                             <NavbarNav left>
                                 <NavItem>
-                                    <NavLink to="/analyzer">Analyzer</NavLink>
+                                    <NavLink to="/analyzer/">Analyzer</NavLink>
                                 </NavItem>
                                 <NavItem>
-                                    <NavLink to="/braintrain">Your Brains</NavLink>
+                                    <NavLink to="/braintrain/">Your Brains</NavLink>
                                 </NavItem>                                
                                 <NavItem>
-                                    <NavLink to="/trainer">Our Brain</NavLink>
+                                    <NavLink to="/trainer/">Our Brain</NavLink>
                                 </NavItem>
                                 <NavItem>
-                                    <NavLink to="/login">Log In</NavLink>
+                                    <NavLink to="/login/">Log In</NavLink>
                                 </NavItem>                                
                             </NavbarNav>                            
                         </Collapse>
@@ -71,7 +87,7 @@ class NavBar extends React.Component {
                         return(
                             <UserBrainItem
                             name={brain.name}
-                            id={brain.id}
+                            key={brain.id}
                             />
                         );
                     })}

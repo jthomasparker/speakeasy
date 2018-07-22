@@ -9,7 +9,7 @@
     padding: 20px;  
   }
   
-  h5, .headerLink, .titleHeader{
+ .headerLink, .titleHeader{
     color: white !important;
   }
   
