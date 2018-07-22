@@ -35,7 +35,8 @@ class NavBar extends React.Component {
             isWideEnough: false,
             dropdownOpen: false,
             userBrains: [],
-            currentBrain: ''
+            currentBrain: '',
+            url: "/braintrain/"
         };
         this.onClick = this.onClick.bind(this);
         this.toggle = this.toggle.bind(this);
@@ -43,21 +44,21 @@ class NavBar extends React.Component {
 
     componentDidMount = () => {
         // checks to see if the user is already authenticated
-        API.getUser()
-            .then(res => {
-                console.log(res)
-                if(res.data.urlPath !== '/braintrain/'){
-                    this.setState({
-                        url: res.data.urlPath
-                    })
-                    window.location = this.state.url;
-                    API.loadNets().then(res => {console.log(res)});
-                    this.setState({
-                        userLoggedIn: true
-                    })
-                    console.log(this.state.userLoggedIn);
-                }
-            });
+        // API.getUser()
+        //     .then(res => {
+        //         console.log(res)
+        //         if(res.data.urlPath !== '/braintrain/'){
+        //             this.setState({
+        //                 url: res.data.urlPath
+        //             })
+        //             //  window.location = this.state.url;
+        //             API.loadNets().then(res => {console.log(res)});
+        //             this.setState({
+        //                 userLoggedIn: true
+        //             })
+        //             console.log(this.state.userLoggedIn);
+        //         }
+        //     });
     }
 
     onClick() {
