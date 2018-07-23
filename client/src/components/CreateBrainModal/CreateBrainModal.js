@@ -25,19 +25,20 @@ export default class CreateBrainModal extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-  let brainName = this.state.name
-  console.log(brainName)
-  API.createNet({
-    netName: brainName
-  })
-    .then(res => {
-      console.log(res)
-      this.setState({
-        netId: res.data.netId,
-        netName: res.data.netName
-      });
-      this.toggle();
+    let brainName = this.state.name
+    console.log(brainName)
+    API.createNet({
+      netName: brainName
     })
+      .then(res => {
+        console.log(res)
+        this.setState({
+          netId: res.data.netId,
+          netName: res.data.netName
+        });
+        this.toggle();
+        window.location = '/braintrain/'
+      })
   }
 
 

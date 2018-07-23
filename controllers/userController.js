@@ -3,7 +3,7 @@ const AsyncClassifier = require('../async-classifier/async-classifier.js')
 
 module.exports = {
     createNet: (req, res) => {
-        console.log(req.body, req.user.user.userId)
+        console.log("creating " + req.body + " " + req.user.user.userId)
         db.Net
             .create({
                 _userId: req.user.user.userId,
