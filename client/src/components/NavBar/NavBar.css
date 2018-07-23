@@ -1,0 +1,23 @@
+.navbar{
+    /* display: block */
+}
+
+
+.App-header {
+    background-color: #222;
+    /* height: 150px; */
+    padding: 20px;  
+  }
+  
+ .headerLink, .titleHeader{
+    color: white !important;
+  }
+  
+
+  .profile-info{
+      text-align: right
+  }
+
+  .profilePic{
+      width:36%;
+  }

@@ -1,29 +1,27 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import Header from "./components/Header";
-import NavBar from './components/NavBar';
-import RangeSlider from "./components/RangeSlider";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
+import Analyzer from './pages/Analyzer'
+import Trainer from './pages/Trainer'
+import Login from './pages/Login'
+import UserBrainTrain from './pages/UserBrainTrain';
 
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <Header />
-        <div className="row">
-          <div className="col-md-5">
-            <label>Enter text here</label>
-            <textarea className="form-control" id="textInput" rows="3" />
-            <button type="submit" className="btn btn-primary">Submit</button>
-          </div>
-          <div className="col-md-7">
-            <RangeSlider />
-          </div>
-        </div>
-      </div>
-    );
-  }
-}
+
+const App = () => (
+  <Router>
+    <div>
+      <Switch>
+        <Route exact path='/' component={Analyzer} />
+        <Route exact path='/analyzer' component={Analyzer} />
+        <Route exact path='/trainer' component={Trainer} />
+        <Route exact path='/login' component={Login} />
+        <Route exact path='/braintrain/' component={UserBrainTrain} />
+      </Switch>
+    </div>
+  </Router>
+)
 
 export default App;
+

@@ -2,9 +2,14 @@ const brain = require('brain.js');
 const natural = require('natural')
 var jf = require('jsonfile')
 const moment = require('moment')
+const path = require('path')
 
 
-const AsyncClassifier = function(autoTrain, autoTrainThreshold, brainOptions, trainingOptions, tokenizer, stemmer){
+const AsyncClassifier = function(/*config, */autoTrain, autoTrainThreshold, brainOptions, trainingOptions, tokenizer, stemmer){
+   /* this.config = {
+        autoTrain: config ? config.autoTrain || true : true,
+        autoTrainThreshold: config ? config.autoTrainThreshold : 1000
+    } */
     this.autoTrain = autoTrain || true,
     this.autoTrainThreshold = autoTrainThreshold || 1000,
     this.brainOptions = brainOptions,
@@ -87,7 +92,7 @@ const AsyncClassifier = function(autoTrain, autoTrainThreshold, brainOptions, tr
                 this.lastTrainedTime = moment().format('MMMM Do YYYY, h:mm:ss a');
                 this.trainingSessions += 1
                 this.totalTrainingIterations += res.iterations
-                this.avgTrainingError = (this.avgTrainingError += res.error) / this.trainingSessions
+                this.avgTrainingError = ((this.avgTrainingError * (this.trainingSessions - 1)) + res.error) / this.trainingSessions
                 this.lastTrainingResult = res
                 return res
             })
@@ -101,18 +106,26 @@ const AsyncClassifier = function(autoTrain, autoTrainThreshold, brainOptions, tr
             return "Brain not trained!"
         }
         let results = this.trainedNet.run(this.encodeText(input))
+        let resultsArr = []
         let sortedResults = Object.entries(results).sort((a, b) => {
             return b[1] - a[1]
+        }).map(result => {
+            resultsArr.push({
+                label: result[0],
+                confidence: result[1]
+            })
         })
-        return sortedResults
+       // return sortedResults
+       return resultsArr
     },
     this.getTopResult = (input) => {
         let top = this.getResult(input)[0]
-        let topResult = {
+      /*  let topResult = {
             label: top[0],
             confidence: top[1]
-        }
-        return topResult
+        } */
+       // return topResult
+       return top
     },
  
     this.save = (filePath) => {
@@ -128,6 +141,8 @@ const AsyncClassifier = function(autoTrain, autoTrainThreshold, brainOptions, tr
         return savedBrain;
     },
     this.restore = (filePath) => {
+        //TODO: fix filepath
+       // let file = path.join(__dirname, filePath)
         let savedBrain = this.isJson(filePath)
                         ? JSON.parse(filePath)
                         : jf.readFileSync(filePath, (err) => {

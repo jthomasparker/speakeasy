@@ -2,6 +2,9 @@ const AsyncClassifier = require('../async-classifier/async-classifier.js')
 const classifier = new AsyncClassifier()
 const randomClassifier = new AsyncClassifier()
 const sentimentData = require('./sentiment-data.js')
+const twitterData = require('./twitter-data.js')
+const amazonImdbYelpData = require('./amazonImdbYelp-Data.js')
+const moodData = require('./mood-data.js')
 let iteration = 0;
 let classAvgErrArr =[];
 let randAvgErrArr = [];
@@ -19,6 +22,10 @@ let classifierTwo = new AsyncClassifier()
 let classifierThree = new AsyncClassifier()
 let classifierFour = new AsyncClassifier()
 let classifierFive = new AsyncClassifier()
+let twitterClassifier = new AsyncClassifier()
+let moodClassifier = new AsyncClassifier()
+let customSentimentClassifier = new AsyncClassifier()
+const db = require('../models')
 
 
 const getRandom = (min, max) => Math.floor(Math.random() * (max - min) + min)
@@ -64,8 +71,8 @@ const train = (start, end) => {
 }
 
 const getAccuracy = (thisClassifier, avgErrArr) => {
-    let max = getRandom(2000, sentimentData.length)
-  //  let min = getRandom(max - 500, max)
+   // let max = getRandom(0, amazonImdbYelpData.length)
+   let max = 5000
     let min = max - 200
     let error = 0;
     let total = 0;
@@ -75,7 +82,8 @@ const getAccuracy = (thisClassifier, avgErrArr) => {
     for(let i = min; i < max; i++){
         total++
         let result = thisClassifier.getResult(sentimentData[i].input)
-        let guess = result[0][1]
+       // console.log(result)
+        let guess = result[0].confidence
         let correctAns = sentimentData[i].rating
         error += Math.abs(guess - correctAns)
     }
@@ -108,7 +116,16 @@ const trainRandom = (thisClassifier, num, filePath, thisErrArr) => {
     for(let i = 0; i < 50; i++){
         let j = getRandom(0, sentimentData.length)
         if(!trainedIds.includes(sentimentData[j].id)){
-        thisClassifier.addDefinition(sentimentData[j].input, sentimentData[j].rating)
+          //  let label = sentimentData[j].rating.toFixed(1).toString()
+           let rating = sentimentData[j].rating
+           let label;
+           if(rating <= .2) label = "Very Negative"
+           if(rating > .2 &&  rating <= .4) label = "Negative"
+           if(rating > .4 && rating <= .6) label = "Neutral"
+           if(rating > .6 && rating <= .8) label = "Positive"
+           if(rating > .8) label = "Very Positive"
+           
+        thisClassifier.addDefinition(sentimentData[j].input, label)//sentimentData[j].rating)
         trainedIds.push(sentimentData[j].id)
         } else {
             i -= 1
@@ -134,16 +151,184 @@ const trainRandom = (thisClassifier, num, filePath, thisErrArr) => {
     })
 }
 
+const trainTwitter = (thisClassifier, num, filePath, thisErrArr) => {
+    let neg = 0
+    let pos = 0
+    for(let i = 0; i < 50; i++){
+       // if(i % 2 === 0){
+      //  let input = twitterData[i+1]
+      //  let output = twitterData[i]
+           let r = getRandom(0, amazonImdbYelpData.length)
+           let input
+           let output
+
+        if(!trainedIds.includes(r)){
+            input = amazonImdbYelpData[r].input
+            output = amazonImdbYelpData[r].output
+         //   console.log(`classifier${num} adding record ${r}`)
+        /*
+           if(r % 2 === 0){
+               input = twitterData[r + 1]
+               output = twitterData[r]
+           } else {
+               input = twitterData[r]
+               output = twitterData[r-1]
+           }*/
+           thisClassifier.addDefinition(input, output)
+           trainedIds.push(r)
+           if(output === 0){
+               neg++
+           } else {
+               pos++
+           }
+        } else {
+            i -= 1
+        }
+        
+
+          //  console.log(input, output)
+            
+       // }
+    }
+    console.log(`classifier${num} added ${pos + neg} definitions: ${pos} positive and ${neg} negative`)
+    console.log(`twitterClassifier${num}: training...`)
+    thisClassifier.train().then(res => {
+        console.log(res)
+        thisClassifier.save(filePath)
+        console.log(`twitterClassifier${num}: saved`)
+        console.log("I love you: ",thisClassifier.getTopResult("I love you"))
+        console.log("I hate you: ",thisClassifier.getTopResult("I hate you"))
+        console.log("I love that: ",thisClassifier.getTopResult("I love that"))
+        console.log("I hate that: ",thisClassifier.getTopResult("I hate that"))
+        console.log(`twitterClassifier${num}: \n`,JSON.stringify(getStatus(thisClassifier, thisErrArr), null, 2))
+        if(trainedIds.length + 51 <= amazonImdbYelpData.length){
+        trainTwitter(thisClassifier, num, filePath, thisErrArr)
+        } else {
+            console.log(`twitterClassifier${num}: done`)
+        }
+    })
+    .catch(err => {
+        console.log(`twitterClassifier${num}:`, err)
+      //  trainRandom(thisClassifier, num, filePath, thisErrArr)
+    })
+}
+
+const trainSpecific = (thisClassifier, classifierName, filepath) => {
+    console.log(classifierName + " adding defs")
+    console.log("I love you",thisClassifier.getTopResult("I love you"))
+    console.log("I hate you",thisClassifier.getTopResult("I hate you"))
+    console.log("I love that",thisClassifier.getTopResult("I love that"))
+    console.log("I hate that",thisClassifier.getTopResult("I hate that"))
+   /* thisClassifier.addDefinition("I love you", 1)
+    thisClassifier.addDefinition("I hate you", 0)
+    thisClassifier.addDefinition("I love that", 1)
+    thisClassifier.addDefinition("I hate that", 0)*/
+    console.log(classifierName + " training")
+    thisClassifier.train()
+        .then(res => {
+            console.log(classifierName + " trained")
+            console.log(res)
+            console.log("I love you",thisClassifier.getTopResult("I love you"))
+            console.log("I hate you",thisClassifier.getTopResult("I hate you"))
+            console.log("I love that",thisClassifier.getTopResult("I love that"))
+            console.log("I hate that",thisClassifier.getTopResult("I hate that"))
+            thisClassifier.save(filepath)
+            
+            
+        })
+}
+
+const trainMoods = () => {
+    moodClassifier.restore('./moodClassifier.json')
+    customSentimentClassifier.restore('./customSentiment.json')
+    console.log("I love you",customSentimentClassifier.getTopResult("I love you"))
+    console.log("I hate you",customSentimentClassifier.getTopResult("I hate you"))
+    console.log("I love that",customSentimentClassifier.getTopResult("I love that"))
+    console.log("I hate that",customSentimentClassifier.getTopResult("I hate that"))
+    console.log("I love you",moodClassifier.getResult("I love you"))
+    console.log("I hate you",moodClassifier.getResult("I hate you"))
+    console.log("I love that",moodClassifier.getResult("I love that"))
+    console.log("I hate that",moodClassifier.getResult("I hate that"))
+        for(let i = 0; i < moodData.length; i++){
+            if(!moodData[i].trained){
+                let sentiment = moodData[i].sentiment / 100
+                customSentimentClassifier.addDefinition(moodData[i].input, sentiment)
+                console.log("custom:\nInput: " + moodData[i].input + " , output: " + sentiment)
+                for(let j = 0; j < moodData[i].moods.length; j++){
+                    moodClassifier.addDefinition(moodData[i].input, moodData[i].moods[j].value)
+                    console.log("mood:\nInput: " + moodData[i].input + " , output: " + moodData[i].moods[j].value)
+                }
+
+            }
+        }
+        console.log("Custom Classifier training...")
+        customSentimentClassifier.train().then(res => {
+            console.log("Custom Classifier Result: ", res)
+            console.log("I love you",customSentimentClassifier.getTopResult("I love you"))
+            console.log("I hate you",customSentimentClassifier.getTopResult("I hate you"))
+            console.log("I love that",customSentimentClassifier.getTopResult("I love that"))
+            console.log("I hate that",customSentimentClassifier.getTopResult("I hate that"))
+            customSentimentClassifier.save('./customSentiment.json')
+            console.log("Custom Classifier done")
+            trainTwitter(classifierFour, 4, './amazonFour.json', four)
+            trainTwitter(classifierFive, 5, './amazonFive.json', five)
+        })
+        console.log("Mood Classifier training...")
+        moodClassifier.train().then(res => {
+            console.log("Mood Classifier Result: ", res)
+            console.log("I love you",moodClassifier.getResult("I love you"))
+            console.log("I hate you",moodClassifier.getResult("I hate you"))
+            console.log("I love that",moodClassifier.getResult("I love that"))
+            console.log("I hate that",moodClassifier.getResult("I hate that"))
+            moodClassifier.save('./moodClassifier.json')
+            console.log("Mood Classifier done")
+            trainTwitter(classifierOne, 1, './amazonOne.json', one)
+    trainTwitter(classifierTwo, 2, './amazonTwo.json', two)
+    trainTwitter(classifierThree, 3, './amazonThree.json', three)
+        })
+}
+
 const start = () => {
    // classifier.restore('./sentimentNet.json')
   //  console.log("Classifier Restored: \n",classifier.getStats())
   //  train(0, 50)
-    trainRandom(classifierOne, 6, './six.json', one)
-    trainRandom(classifierTwo, 7, './seven.json', two)
-    trainRandom(classifierThree, 8, './eight.json', three)
-    trainRandom(classifierFour, 9, './nine.json', four)
-    trainRandom(classifierFive, 10, './ten.json', five)
+
+   // trainRandom(classifierOne, 6, './six.json', one)
+ //   trainRandom(classifierTwo, 7, './seven.json', two)
+ //   trainRandom(classifierThree, 3, './three.json', three)
+  //  trainRandom(classifierFour, 9, './nine.json', four)
+  //  trainRandom(classifierFive, 10, './classOne.json', five)
+ // classifier.restore('./sentimentNet.json')
+ // console.log(JSON.stringify(getStatus(classifier, one), null, 2))
+  /*****  classifierOne.restore('./amazonOne.json')
+    classifierTwo.restore('./amazonTwo.json')
+    classifierThree.restore('./amazonThree.json')
+    classifierFour.restore('./amazonFour.json')
+    classifierFive.restore('./amazonFive.json')
+    db.Trainer.find().then(res => console.log(res))***/
+    trainMoods()
+    /*trainTwitter(classifierOne, 1, './amazonOne.json', one)
+    trainTwitter(classifierTwo, 2, './amazonTwo.json', two)
+    trainTwitter(classifierThree, 3, './amazonThree.json', three)
+    trainTwitter(classifierFour, 4, './amazonFour.json', four)
+    trainTwitter(classifierFive, 5, './amazonFive.json', five)*/
+   /* classifierOne.restore('../net/trainedNets/twitterOne.json')
+    classifierTwo.restore('../net/trainedNets/twitterTwo.json')
+    classifierThree.restore('../net/trainedNets/twitterThree.json')
+    classifierFour.restore('../net/trainedNets/twitterFour.json')
+    classifierFive.restore('../net/trainedNets/ten.json')
+    trainSpecific(classifierOne, "twitterOne", '../net/trainedNets/twitterOne.json')
+    trainSpecific(classifierTwo, "twitterTwo", '../net/trainedNets/twitterTwo.json')
+    trainSpecific(classifierThree, "twitterThree", '../net/trainedNets/twitterThree.json')
+    trainSpecific(classifierFour, "twitterFour", '../net/trainedNets/twitterFour.json')
+    trainSpecific(classifierFive, "ten", '../net/trainedNets/ten.json')*/
+   // let thisClassifier = new AsyncClassifier({autoTrain: false, autoTrainThreshold: 2000})
+  //  console.log(thisClassifier.config)
+    
+
+
 }
 
 //train(500, 510)
 start()
+//trainTwitter(0, 50)
