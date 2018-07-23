@@ -9,22 +9,44 @@ import {DropdownItem} from 'mdbreact';
 import './NavBar.css';
 
 import prof from './JAZ.PNG';
-function BrainDropdown(props) {
-    if(props.userBrains.length > 1){
-        return(<UserBrainsDropdown>
-            {props.userBrains.map(brain => {
-                return(
-                    <UserBrainItem
-                    name={brain.name}
-                    key={brain.id}
-                    />
-                );
-            })}
-            </UserBrainsDropdown>);
+class BrainDropdown extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {            
+            userBrains: []
+        };        
     }
-    return (<UserBrainsDropdown>
-        <DropdownItem href="/braintrain/">Create a Brain to Get Started</DropdownItem>
-        </UserBrainsDropdown>)
+    componentDidMount = () => {
+        // checks to see if the user is already authenticated
+        API.getUser()
+        .then(res => {            
+            API.loadNets().then(res => {
+            console.log("nets? " + JSON.stringify(res))
+            this.setState({
+                userBrains: [...res.data.nets]
+            })
+            });            
+        });
+        
+    }
+
+    render() {
+        if(this.state.userBrains.length > 0){
+            return(<UserBrainsDropdown>
+                {this.state.userBrains.map(brain => {
+                    return(
+                        <UserBrainItem
+                        name={brain.netName}
+                        key={brain.netId}
+                        />
+                    );
+                })}
+                </UserBrainsDropdown>);
+        }
+        return (<UserBrainsDropdown>
+            <DropdownItem href="/braintrain/">Create a Brain to Get Started</DropdownItem>
+            </UserBrainsDropdown>)
+    }
 }
 
 class NavBar extends React.Component {
@@ -35,8 +57,7 @@ class NavBar extends React.Component {
             isWideEnough: false,
             dropdownOpen: false,
             userBrains: [],
-            currentBrain: '',
-            url: "/braintrain/"
+            currentBrain: ''
         };
         this.onClick = this.onClick.bind(this);
         this.toggle = this.toggle.bind(this);
@@ -44,21 +65,15 @@ class NavBar extends React.Component {
 
     componentDidMount = () => {
         // checks to see if the user is already authenticated
-        // API.getUser()
-        //     .then(res => {
-        //         console.log(res)
-        //         if(res.data.urlPath !== '/braintrain/'){
-        //             this.setState({
-        //                 url: res.data.urlPath
-        //             })
-        //             //  window.location = this.state.url;
-        //             API.loadNets().then(res => {console.log(res)});
-        //             this.setState({
-        //                 userLoggedIn: true
-        //             })
-        //             console.log(this.state.userLoggedIn);
-        //         }
-        //     });
+        API.getUser()
+        .then(res => {            
+            API.loadNets().then(res => {
+            console.log("nets? " + JSON.stringify(res))
+            this.setState({
+                userBrains: [...res.data.nets]
+            })
+            });            
+        });
     }
 
     onClick() {
