@@ -25,12 +25,12 @@ export default {
         )
     },
     // creates a user's brain
-    createNet: data => axios.post('/create', data),
+    createNet: data => axios.post('/braintrain/create', data),
     // trains a user's brain
-    trainNet: data => axios.post('/train', data),
+    trainNet: data => axios.post('/braintrain/train', data),
     // gets a result from a user's brain
-    getResult: data => axios.post('/result', data),
+    getResult: data => axios.post('/braintrain/result', data),
     // loads all the user's brains
-    loadNets: () => axios.get('/load')
+    loadNets: () => axios.get('/braintrain/load')
 
 }

@@ -28,9 +28,18 @@ class UserBrainTrain extends Component {
                     url: res.data.urlPath
                 })
                 window.location = this.state.url
+            } else {
+              API.loadNets().then(res => {
+                console.log("nets? " + JSON.stringify(res))
+                this.setState({
+                  userBrains: [...res.data.nets]
+                })
+                //console.log(this.state.userBrains)
+              });
             }
+            
         });
-        API.loadNets().then(res => {console.log("nets? " + JSON.stringify(res))});
+        
 
         let height = 300; // Only simluated here!
 
