@@ -86,26 +86,51 @@ module.exports = {
         let twitterSum = 0
         let amazonSum = 0
         let totalSum = 0
+
+        let allPositive = []
+        let allNegative = []
+
+
         allResults.rotTom.data = allNets.rtNets.map(classifier => {
             let result = classifier.getTopResult(userInput)
+            if(result.confidence < .5){
+                allNegative.push(result.confidence)
+            } else {
+                allPositive.push(result.confidence)
+            }
             rtSum += result.confidence
             return result.confidence
         })
 
         allResults.twitter.data = allNets.twitterNets.map(classifier => {
             let result = classifier.getTopResult(userInput)
+            if(result.confidence < .5){
+                allNegative.push(result.confidence)
+            } else {
+                allPositive.push(result.confidence)
+            }
             twitterSum += result.confidence
             return result.confidence
         })
 
         allResults.reviews.data = allNets.amazonNets.map(classifier => {
             let result = classifier.getTopResult(userInput)
+            if(result.confidence < .5){
+                allNegative.push(result.confidence)
+            } else {
+                allPositive.push(result.confidence)
+            }
             amazonSum += result.confidence
             return result.confidence
         })
 
         
         let custom = customClassifier.getTopResult(userInput)
+        if(custom.confidence < .5){
+            allNegative.push(custom.confidence)
+        } else {
+            allPositive.push(custom.confidence)
+        }
         allResults.jaz.data = custom.confidence
         allResults.jaz.moods = moodClassifer.getResult(userInput)
 
@@ -114,6 +139,10 @@ module.exports = {
         //console.log(rtSum, twitterSum, amazonSum, custom.confidence)
         totalSum = rtSum + twitterSum + amazonSum + custom.confidence
         allResults.allNets.avg = totalSum / (1 + allResults.rotTom.data.length + allResults.twitter.data.length + allResults.reviews.data.length)
+        allResults.allNets.allPositive = allPositive
+        allResults.allNets.allNegative = allNegative
+        allResults.allNets.posAvg = (allPositive.reduce((prev, cur) => prev + cur)) / allPositive.length
+        allResults.allNets.negAvg = (allNegative.reduce((prev, cur) => prev + cur)) / allNegative.length
         allResults.rotTom.avg = rtSum / allResults.rotTom.data.length
         allResults.twitter.avg = twitterSum / allResults.twitter.data.length
         allResults.reviews.avg = amazonSum / allResults.reviews.data.length

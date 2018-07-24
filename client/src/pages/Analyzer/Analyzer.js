@@ -28,7 +28,8 @@ class Analyzer extends Component {
     const { name, value } = event.target;
     this.setState({
       [name]: value,
-      displayResult: false
+      displayResult: false,
+      sentimentValue: 0
     });
   }
 
@@ -40,7 +41,14 @@ class Analyzer extends Component {
       })
         .then(res => {
           console.log(res)
-          let sentiment = Math.round(res.data.allNets.avg * 100)
+          let sentiment;
+          if(res.data.sentimentNpm.data > .55){
+            sentiment = Math.round(res.data.allNets.posAvg * 100)
+          } else if(res.data.sentimentNpm.data < .45){
+            sentiment = Math.round(res.data.allNets.negAvg * 100)
+          } else {
+            sentiment = Math.round(res.data.allNets.avg * 100)
+          }
           this.setState({
             sentimentValue: sentiment,
             displayResult: true,
@@ -92,7 +100,7 @@ class Analyzer extends Component {
             <div className="col col-md-2">
               {this.state.displayResult ? (
               <div>
-             <ul className="list-group">
+             <ul className="list-group mr-2">
                 <div className="list-group-item list-group-item-action flex-column align-items-start">
                   <div className="d-flex w-100 justify-content-between">
                     <h4 className="mb-1 lead">Top 3 Moods</h4>
