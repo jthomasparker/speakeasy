@@ -237,7 +237,7 @@ class UserBrainTrain extends Component {
               Submit
                 </button>
           </div>
-          <div> <p>If you're a developer, your API key is {this.state.currentUserId}.</p><p> An example of your API call would be https://jaz-speakeasy.herokuapp.com/api/public/?apikey={this.state.currentUserId}&q=[query]
+          <div> <p><br /> Developer note: Your API key is {this.state.currentUserId}.</p><p> An example of your API call would be https://jaz-speakeasy.herokuapp.com/api/public/?apikey={this.state.currentUserId}&q=[query]
            </p> </div>
         </div>
       </div>
