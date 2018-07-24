@@ -27,11 +27,7 @@ class BrainDropdown extends React.Component {
             })
             });            
         });
-        
     }
-
-
-
     render() {
         if(this.state.userBrains.length > 0){
             return(<UserBrainsDropdown>
