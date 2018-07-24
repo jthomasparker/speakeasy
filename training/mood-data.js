@@ -850,10 +850,6 @@ module.exports = moods = [
                 {
                         "value" : "excited",
                         "checked" : true
-                },
-                {
-                        "value" : "neutral",
-                        "checked" : true
                 }
         ],
         "sentiment" : 90
@@ -1040,7 +1036,7 @@ module.exports = moods = [
         "_id" : `ObjectId("5b4cfa4c2a1c2a6f816c2291")`,
         "input" : "We've been waiting for hours, this is taking too long.",
         "__v" : 0,
-        "trained" : false,
+        "trained" : true,
         "moods" : [
                 {
                         "value" : "irritated",
@@ -1057,7 +1053,7 @@ module.exports = moods = [
         "_id" : `ObjectId("5b4cfaa22a1c2a6f816c25dd")`,
         "input" : "This is not good.",
         "__v" : 0,
-        "trained" : false,
+        "trained" : true,
         "moods" : [
                 {
                         "value" : "sad",
@@ -1078,7 +1074,7 @@ module.exports = moods = [
         "_id" : `ObjectId("5b4d00ad2a1c2a6f816c6977")`,
         "input" : "I hate this",
         "__v" : 0,
-        "trained" : false,
+        "trained" : true,
         "moods" : [
                 {
                         "value" : "sad",
@@ -1099,7 +1095,7 @@ module.exports = moods = [
         "_id" : `ObjectId("5b4d01ae2a1c2a6f816c74e9")`,
         "input" : "no way!",
         "__v" : 0,
-        "trained" : false,
+        "trained" : true,
         "moods" : [
                 {
                         "value" : "happy",
@@ -1120,7 +1116,7 @@ module.exports = moods = [
         "_id" : `ObjectId("5b4d035e2a1c2a6f816c8811")`,
         "input" : "lol great technique",
         "__v" : 0,
-        "trained" : false,
+        "trained" : true,
         "moods" : [
                 {
                         "value" : "happy",
@@ -1141,7 +1137,7 @@ module.exports = moods = [
         "_id" : `ObjectId("5b4d03912a1c2a6f816c8a47")`,
         "input" : "hahaha that's a great tagline for an app",
         "__v" : 0,
-        "trained" : false,
+        "trained" : true,
         "moods" : [
                 {
                         "value" : "happy",
@@ -1162,7 +1158,7 @@ module.exports = moods = [
         "_id" : `ObjectId("5b4d03ed2a1c2a6f816c8d7a")`,
         "input" : "she'll be really good",
         "__v" : 0,
-        "trained" : false,
+        "trained" : true,
         "moods" : [
                 {
                         "value" : "happy",
@@ -1175,10 +1171,6 @@ module.exports = moods = [
                 {
                         "value" : "grateful",
                         "checked" : true
-                },
-                {
-                        "value" : "neutral",
-                        "checked" : true
                 }
         ],
         "sentiment" : 85
@@ -1187,7 +1179,7 @@ module.exports = moods = [
         "_id" : `ObjectId("5b4d04312a1c2a6f816c9001")`,
         "input" : "thank you",
         "__v" : 0,
-        "trained" : false,
+        "trained" : true,
         "moods" : [
                 {
                         "value" : "happy",
@@ -1204,7 +1196,7 @@ module.exports = moods = [
         "_id" : `ObjectId("5b4d04442a1c2a6f816c90bd")`,
         "input" : "thank you so much!",
         "__v" : 0,
-        "trained" : false,
+        "trained" : true,
         "moods" : [
                 {
                         "value" : "happy",
@@ -1225,7 +1217,7 @@ module.exports = moods = [
         "_id" : `ObjectId("5b4d04d82a1c2a6f816c95e9")`,
         "input" : "this app is awesome",
         "__v" : 0,
-        "trained" : false,
+        "trained" : true,
         "moods" : [
                 {
                         "value" : "happy",
@@ -1242,7 +1234,7 @@ module.exports = moods = [
         "_id" : `ObjectId("5b4d04f92a1c2a6f816c9713")`,
         "input" : "this app is awesome!",
         "__v" : 0,
-        "trained" : false,
+        "trained" : true,
         "moods" : [
                 {
                         "value" : "happy",
@@ -1263,7 +1255,7 @@ module.exports = moods = [
         "_id" : `ObjectId("5b4d05412a1c2a6f816c99a4")`,
         "input" : "looks like shit",
         "__v" : 0,
-        "trained" : false,
+        "trained" : true,
         "moods" : [
                 {
                         "value" : "sad",
@@ -1280,7 +1272,7 @@ module.exports = moods = [
         "_id" : `ObjectId("5b4d05612a1c2a6f816c9ad7")`,
         "input" : "that's so shitty",
         "__v" : 0,
-        "trained" : false,
+        "trained" : true,
         "moods" : [
                 {
                         "value" : "sad",
@@ -1301,7 +1293,7 @@ module.exports = moods = [
         "_id" : `ObjectId("5b4d05812a1c2a6f816c9c54")`,
         "input" : "what a shithead",
         "__v" : 0,
-        "trained" : false,
+        "trained" : true,
         "moods" : [
                 {
                         "value" : "sad",
@@ -1322,7 +1314,7 @@ module.exports = moods = [
         "_id" : `ObjectId("5b4d05992a1c2a6f816c9d44")`,
         "input" : "what a dick",
         "__v" : 0,
-        "trained" : false,
+        "trained" : true,
         "moods" : [
                 {
                         "value" : "sad",
@@ -1343,7 +1335,7 @@ module.exports = moods = [
         "_id" : `ObjectId("5b4d05d82a1c2a6f816c9fa8")`,
         "input" : "what a great idea",
         "__v" : 0,
-        "trained" : false,
+        "trained" : true,
         "moods" : [
                 {
                         "value" : "happy",
@@ -1360,7 +1352,7 @@ module.exports = moods = [
         "_id" : `ObjectId("5b4d05e92a1c2a6f816ca071")`,
         "input" : "what a great idea!",
         "__v" : 0,
-        "trained" : false,
+        "trained" : true,
         "moods" : [
                 {
                         "value" : "happy",
@@ -1381,7 +1373,7 @@ module.exports = moods = [
         "_id" : `ObjectId("5b4d06272a1c2a6f816ca2de")`,
         "input" : "that's a weird fucking thing to say",
         "__v" : 0,
-        "trained" : false,
+        "trained" : true,
         "moods" : [
                 {
                         "value" : "sad",
@@ -1394,10 +1386,6 @@ module.exports = moods = [
                 {
                         "value" : "angry",
                         "checked" : true
-                },
-                {
-                        "value" : "neutral",
-                        "checked" : true
                 }
         ],
         "sentiment" : 25
@@ -1406,7 +1394,7 @@ module.exports = moods = [
         "_id" : `ObjectId("5b4d06552a1c2a6f816ca4ac")`,
         "input" : "what a loser",
         "__v" : 0,
-        "trained" : false,
+        "trained" : true,
         "moods" : [
                 {
                         "value" : "sad",
@@ -1427,7 +1415,7 @@ module.exports = moods = [
         "_id" : `ObjectId("5b4d067e2a1c2a6f816ca663")`,
         "input" : "i can't believe he said that",
         "__v" : 0,
-        "trained" : false,
+        "trained" : true,
         "moods" : [
                 {
                         "value" : "sad",
@@ -1448,7 +1436,7 @@ module.exports = moods = [
         "_id" : `ObjectId("5b4d06a22a1c2a6f816ca7d3")`,
         "input" : "i can't believe she said",
         "__v" : 0,
-        "trained" : false,
+        "trained" : true,
         "moods" : [
                 {
                         "value" : "sad",
@@ -1469,7 +1457,7 @@ module.exports = moods = [
         "_id" : `ObjectId("5b4d06c32a1c2a6f816ca941")`,
         "input" : "this is a neutral statement",
         "__v" : 0,
-        "trained" : false,
+        "trained" : true,
         "moods" : [
                 {
                         "value" : "neutral",
@@ -1482,7 +1470,7 @@ module.exports = moods = [
         "_id" : `ObjectId("5b4d07392a1c2a6f816cadf3")`,
         "input" : "I'm so happy!",
         "__v" : 0,
-        "trained" : false,
+        "trained" : true,
         "moods" : [
                 {
                         "value" : "happy",
@@ -1499,7 +1487,7 @@ module.exports = moods = [
         "_id" : `ObjectId("5b4d07482a1c2a6f816cae90")`,
         "input" : "I'm so happy",
         "__v" : 0,
-        "trained" : false,
+        "trained" : true,
         "moods" : [
                 {
                         "value" : "happy",
@@ -1512,7 +1500,7 @@ module.exports = moods = [
         "_id" : `ObjectId("5b4d075f2a1c2a6f816caf84")`,
         "input" : "I'm so grateful!",
         "__v" : 0,
-        "trained" : false,
+        "trained" : true,
         "moods" : [
                 {
                         "value" : "happy",
@@ -1533,7 +1521,7 @@ module.exports = moods = [
         "_id" : `ObjectId("5b4d07722a1c2a6f816cb061")`,
         "input" : "I'm so grateful",
         "__v" : 0,
-        "trained" : false,
+        "trained" : true,
         "moods" : [
                 {
                         "value" : "grateful",
@@ -1546,7 +1534,7 @@ module.exports = moods = [
         "_id" : `ObjectId("5b4d079e2a1c2a6f816cb272")`,
         "input" : "I'm so angry!",
         "__v" : 0,
-        "trained" : false,
+        "trained" : true,
         "moods" : [
                 {
                         "value" : "irritated",
@@ -1563,7 +1551,7 @@ module.exports = moods = [
         "_id" : `ObjectId("5b4d080b2a1c2a6f816cb731")`,
         "input" : "that's so infuriating",
         "__v" : 0,
-        "trained" : false,
+        "trained" : true,
         "moods" : [
                 {
                         "value" : "irritated",
@@ -1580,7 +1568,7 @@ module.exports = moods = [
         "_id" : `ObjectId("5b4d08322a1c2a6f816cb8bb")`,
         "input" : "that's hilarious",
         "__v" : 0,
-        "trained" : false,
+        "trained" : true,
         "moods" : [
                 {
                         "value" : "happy",
@@ -1593,7 +1581,7 @@ module.exports = moods = [
         "_id" : `ObjectId("5b4d085a2a1c2a6f816cba34")`,
         "input" : "I'm so upset",
         "__v" : 0,
-        "trained" : false,
+        "trained" : true,
         "moods" : [
                 {
                         "value" : "sad",
@@ -1614,7 +1602,7 @@ module.exports = moods = [
         "_id" : `ObjectId("5b4d08822a1c2a6f816cbb9a")`,
         "input" : "ugh",
         "__v" : 0,
-        "trained" : false,
+        "trained" : true,
         "moods" : [
                 {
                         "value" : "irritated",
@@ -1627,7 +1615,7 @@ module.exports = moods = [
         "_id" : `ObjectId("5b4d08e02a1c2a6f816cbf1e")`,
         "input" : "you go girl",
         "__v" : 0,
-        "trained" : false,
+        "trained" : true,
         "moods" : [
                 {
                         "value" : "happy",
@@ -1644,7 +1632,7 @@ module.exports = moods = [
         "_id" : `ObjectId("5b4d09012a1c2a6f816cc05b")`,
         "input" : "that's terrible",
         "__v" : 0,
-        "trained" : false,
+        "trained" : true,
         "moods" : [
                 {
                         "value" : "sad",
@@ -1665,7 +1653,7 @@ module.exports = moods = [
         "_id" : `ObjectId("5b4d091d2a1c2a6f816cc150")`,
         "input" : "switzerland",
         "__v" : 0,
-        "trained" : false,
+        "trained" : true,
         "moods" : [
                 {
                         "value" : "neutral",
@@ -1678,7 +1666,7 @@ module.exports = moods = [
         "_id" : `ObjectId("5b4d09642a1c2a6f816cc3d8")`,
         "input" : "SHE IS SO SMART!!!!!",
         "__v" : 0,
-        "trained" : false,
+        "trained" : true,
         "moods" : [
                 {
                         "value" : "happy",
@@ -1699,7 +1687,7 @@ module.exports = moods = [
         "_id" : `ObjectId("5b4d09a02a1c2a6f816cc5ed")`,
         "input" : "SHE IS SO STUPID!!!!!",
         "__v" : 0,
-        "trained" : false,
+        "trained" : true,
         "moods" : [
                 {
                         "value" : "irritated",
@@ -1720,7 +1708,7 @@ module.exports = moods = [
         "_id" : `ObjectId("5b4d0a522a1c2a6f816ccc83")`,
         "input" : "what a bitch",
         "__v" : 0,
-        "trained" : false,
+        "trained" : true,
         "moods" : [
                 {
                         "value" : "irritated",
@@ -1737,7 +1725,269 @@ module.exports = moods = [
         "_id" : `ObjectId("5b4d0a752a1c2a6f816ccdbd")`,
         "input" : "what a jerk",
         "__v" : 0,
+        "trained" : true,
+        "moods" : [
+                {
+                        "value" : "irritated",
+                        "checked" : true
+                },
+                {
+                        "value" : "angry",
+                        "checked" : true
+                }
+        ],
+        "sentiment" : 10
+},
+{
+        "_id" : `ObjectId("5b5136d02a1c2a6f81957557")`,
+        "input" : "you're not even training the brain",
+        "__v" : 0,
         "trained" : false,
+        "moods" : [
+                {
+                        "value" : "irritated",
+                        "checked" : true
+                },
+                {
+                        "value" : "angry",
+                        "checked" : true
+                }
+        ],
+        "sentiment" : 0
+},
+{
+        "_id" : `ObjectId("5b5137022a1c2a6f81957729")`,
+        "input" : "i'm hungry",
+        "__v" : 0,
+        "trained" : false,
+        "moods" : [
+                {
+                        "value" : "irritated",
+                        "checked" : true
+                }
+        ],
+        "sentiment" : 6
+},
+{
+        "_id" : `ObjectId("5b536ff12a1c2a6f81aa2bc2")`,
+        "input" : ":)",
+        "__v" : 0,
+        "trained" : false,
+        "moods" : [
+                {
+                        "value" : "happy",
+                        "checked" : true
+                },
+                {
+                        "value" : "excited",
+                        "checked" : true
+                },
+                {
+                        "value" : "grateful",
+                        "checked" : true
+                }
+        ],
+        "sentiment" : 100
+},
+{
+        "_id" : `ObjectId("5b536ff12a1c2a6f81aa2bc2")`,
+        "input" : ":(",
+        "__v" : 0,
+        "trained" : false,
+        "moods" : [
+                {
+                        "value" : "sad",
+                        "checked" : true
+                },
+                {
+                        "value" : "angry",
+                        "checked" : true
+                },
+                {
+                        "value" : "irritated",
+                        "checked" : true
+                }
+        ],
+        "sentiment" : 0
+},
+{
+        "_id" : `ObjectId("5b536ff12a1c2a6f81aa2bc2")`,
+        "input" : "=(",
+        "__v" : 0,
+        "trained" : false,
+        "moods" : [
+                {
+                        "value" : "sad",
+                        "checked" : true
+                },
+                {
+                        "value" : "angry",
+                        "checked" : true
+                },
+                {
+                        "value" : "irritated",
+                        "checked" : true
+                }
+        ],
+        "sentiment" : 0
+},
+{
+        "_id" : `ObjectId("5b536ff12a1c2a6f81aa2bc2")`,
+        "input" : "=)",
+        "__v" : 0,
+        "trained" : false,
+        "moods" : [
+                {
+                        "value" : "happy",
+                        "checked" : true
+                },
+                {
+                        "value" : "excited",
+                        "checked" : true
+                },
+                {
+                        "value" : "grateful",
+                        "checked" : true
+                }
+        ],
+        "sentiment" : 100
+},
+{
+        "_id" : `ObjectId("5b464de556b1b60cbce77f18")`,
+        "moods" : [
+                {
+                        "value" : "happy",
+                        "checked" : true
+                },
+                {
+                        "value" : "grateful",
+                        "checked" : true
+                }
+        ],
+        "input" : "you're the best",
+        "sentiment" : 71,
+        "__v" : 0,
+        "trained" : false
+},
+{
+        "_id" : `ObjectId("5b560683c0485fc10957f5ca")`,
+        "input" : "he's so annoying",
+        "__v" : 0,
+        "moods" : [
+                {
+                        "value" : "irritated",
+                        "checked" : true
+                },
+                {
+                        "value" : "angry",
+                        "checked" : true
+                }
+        ],
+        "sentiment" : 38,
+        "trained" : false
+},
+{
+        "_id" : `ObjectId("5b5606cfc0485fc10957f5db")`,
+        "input" : "amazing",
+        "__v" : 0,
+        "moods" : [
+                {
+                        "value" : "happy",
+                        "checked" : true
+                },
+                {
+                        "value" : "excited",
+                        "checked" : true
+                },
+                {
+                        "value" : "grateful",
+                        "checked" : true
+                }
+        ],
+        "sentiment" : 75,
+        "trained" : false
+},
+{
+        "_id" : `ObjectId("5b560714c0485fc10957f5eb")`,
+        "input" : "What an amazing project!",
+        "__v" : 0,
+        "moods" : [
+                {
+                        "value" : "happy",
+                        "checked" : true
+                },
+                {
+                        "value" : "excited",
+                        "checked" : true
+                }
+        ],
+        "sentiment" : 100,
+        "trained" : false
+},
+{
+        "_id" : `ObjectId("5b56074dc0485fc10957f5fa")`,
+        "input" : "what a terrible project!",
+        "__v" : 0,
+        "moods" : [
+                {
+                        "value" : "sad",
+                        "checked" : true
+                },
+                {
+                        "value" : "irritated",
+                        "checked" : true
+                },
+                {
+                        "value" : "excited",
+                        "checked" : true
+                },
+                {
+                        "value" : "angry",
+                        "checked" : true
+                }
+        ],
+        "sentiment" : 0,
+        "trained" : false
+},
+{
+        "_id" : `ObjectId("5b56074dc0485fc10957f5fa")`,
+        "input" : "A+",
+        "__v" : 0,
+        "moods" : [
+                {
+                        "value" : "happy",
+                        "checked" : true
+                },
+                {
+                        "value" : "grateful",
+                        "checked" : true
+                }
+        ],
+        "sentiment" : 75,
+        "trained" : false
+},
+{
+        "_id" : `ObjectId("5b4cf66b2a1c2a6f816bfbf2")`,
+        "input" : "that makes me angry",
+        "__v" : 0,
+        "trained" : true,
+        "moods" : [
+                {
+                        "value" : "irritated",
+                        "checked" : true
+                },
+                {
+                        "value" : "angry",
+                        "checked" : true
+                }
+        ],
+        "sentiment" : 10
+},
+{
+        "_id" : `ObjectId("5b4cf66b2a1c2a6f816bfbf2")`,
+        "input" : "I'm mad at you",
+        "__v" : 0,
+        "trained" : true,
         "moods" : [
                 {
                         "value" : "irritated",
@@ -1750,5 +2000,4 @@ module.exports = moods = [
         ],
         "sentiment" : 10
 }
-
 ]

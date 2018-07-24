@@ -26,6 +26,7 @@ let twitterClassifier = new AsyncClassifier()
 let moodClassifier = new AsyncClassifier()
 let customSentimentClassifier = new AsyncClassifier()
 const db = require('../models')
+const afinnData = require('./afinn.js')
 
 
 const getRandom = (min, max) => Math.floor(Math.random() * (max - min) + min)
@@ -152,6 +153,7 @@ const trainRandom = (thisClassifier, num, filePath, thisErrArr) => {
 }
 
 const trainTwitter = (thisClassifier, num, filePath, thisErrArr) => {
+    thisClassifier.restore(filePath)
     let neg = 0
     let pos = 0
     for(let i = 0; i < 50; i++){
@@ -270,8 +272,8 @@ const trainMoods = () => {
             console.log("I hate that",customSentimentClassifier.getTopResult("I hate that"))
             customSentimentClassifier.save('./customSentiment.json')
             console.log("Custom Classifier done")
-            trainTwitter(classifierFour, 4, './amazonFour.json', four)
-            trainTwitter(classifierFive, 5, './amazonFive.json', five)
+           // trainTwitter(classifierFour, 4, './amazonFour.json', four)
+          //  trainTwitter(classifierFive, 5, './amazonFive.json', five)
         })
         console.log("Mood Classifier training...")
         moodClassifier.train().then(res => {
@@ -282,13 +284,45 @@ const trainMoods = () => {
             console.log("I hate that",moodClassifier.getResult("I hate that"))
             moodClassifier.save('./moodClassifier.json')
             console.log("Mood Classifier done")
-            trainTwitter(classifierOne, 1, './amazonOne.json', one)
-    trainTwitter(classifierTwo, 2, './amazonTwo.json', two)
-    trainTwitter(classifierThree, 3, './amazonThree.json', three)
+          //  trainTwitter(classifierOne, 1, './amazonOne.json', one)
+    //trainTwitter(classifierTwo, 2, './amazonTwo.json', two)
+   // trainTwitter(classifierThree, 3, './amazonThree.json', three)
         })
 }
 
+
+const trainAfinn = (thisClassifier, num, filePath, thisErrArr) => {
+
+    for(let i = 0; i < 50; i++){
+        let r = getRandom(0, afinnData.length)
+        if(!trainedIds.includes(r)){
+            trainedIds.push(r)
+            let input = afinnData[r].input
+            let output = (afinnData[r].output + 5) / 10
+            thisClassifier.addDefinition(input, output)
+        } else {
+            i -= 1
+        }
+    }
+        console.log(`Classifier${num}: training...`)
+        thisClassifier.train().then(res => {
+            console.log(res)
+            thisClassifier.save(filePath)
+            console.log(`Classifier${num}: saved`)
+            console.log("I love you: ",thisClassifier.getTopResult("I love you"))
+            console.log("I hate you: ",thisClassifier.getTopResult("I hate you"))
+            console.log("I love that: ",thisClassifier.getTopResult("I love that"))
+            console.log("I hate that: ",thisClassifier.getTopResult("I hate that"))
+            console.log(`Classifier${num}: \n`,JSON.stringify(getStatus(thisClassifier, thisErrArr), null, 2))
+            trainAfinn(thisClassifier, 1, './afinnClassifier.json', one)
+    })
+
+}
+
 const start = () => {
+
+    //trainAfinn(classifierOne, 1, './afinnClassifier.json', one)
+    
    // classifier.restore('./sentimentNet.json')
   //  console.log("Classifier Restored: \n",classifier.getStats())
   //  train(0, 50)
@@ -300,18 +334,45 @@ const start = () => {
   //  trainRandom(classifierFive, 10, './classOne.json', five)
  // classifier.restore('./sentimentNet.json')
  // console.log(JSON.stringify(getStatus(classifier, one), null, 2))
-  /*****  classifierOne.restore('./amazonOne.json')
+   /* classifierOne.restore('./amazonOne.json')
     classifierTwo.restore('./amazonTwo.json')
     classifierThree.restore('./amazonThree.json')
     classifierFour.restore('./amazonFour.json')
     classifierFive.restore('./amazonFive.json')
-    db.Trainer.find().then(res => console.log(res))***/
+    console.log(classifierOne.getTopResult("I love you"))
+    console.log(classifierTwo.getTopResult("I love you"))
+    console.log(classifierThree.getTopResult("I love you"))
+    console.log(classifierFour.getTopResult("I love you"))
+    console.log(classifierFive.getTopResult("I love you"))
+    console.log(classifierOne.getTopResult("I love that"))
+    console.log(classifierTwo.getTopResult("I love that"))
+    console.log(classifierThree.getTopResult("I love that"))
+    console.log(classifierFour.getTopResult("I love that"))
+    console.log(classifierFive.getTopResult("I love that"))
+    console.log(classifierOne.getTopResult("I hate you"))
+    console.log(classifierTwo.getTopResult("I hate you"))
+    console.log(classifierThree.getTopResult("I hate you"))
+    console.log(classifierFour.getTopResult("I hate you"))
+    console.log(classifierFive.getTopResult("I hate you"))
+    console.log(classifierOne.getTopResult("I hate that"))
+    console.log(classifierTwo.getTopResult("I hate that"))
+    console.log(classifierThree.getTopResult("I hate that"))
+    console.log(classifierFour.getTopResult("I hate that"))
+    console.log(classifierFive.getTopResult("I hate that"))*/
+
+   // db.Trainer.find().then(res => console.log(res))***/
     trainMoods()
-    /*trainTwitter(classifierOne, 1, './amazonOne.json', one)
-    trainTwitter(classifierTwo, 2, './amazonTwo.json', two)
-    trainTwitter(classifierThree, 3, './amazonThree.json', three)
-    trainTwitter(classifierFour, 4, './amazonFour.json', four)
-    trainTwitter(classifierFive, 5, './amazonFive.json', five)*/
+  /*  classifierOne.addDefinition('this is a test', .5)
+    classifierOne.train().then(res => {
+        console.log(res)
+        classifierOne.save('./amazonSix.json')
+        trainTwitter(classifierOne, 1, './amazonSix.json', one)*/
+       /* trainTwitter(classifierTwo, 2, './amazonSix.json', two)
+        trainTwitter(classifierThree, 3, './amazonSix.json', three)
+        trainTwitter(classifierFour, 4, './amazonSix.json', four)
+        trainTwitter(classifierFive, 5, './amazonSix.json', five)*/
+    //})
+
    /* classifierOne.restore('../net/trainedNets/twitterOne.json')
     classifierTwo.restore('../net/trainedNets/twitterTwo.json')
     classifierThree.restore('../net/trainedNets/twitterThree.json')
