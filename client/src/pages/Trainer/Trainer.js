@@ -292,53 +292,6 @@ class Trainer extends Component {
           </div>
           <div className="row">
             <div className="col-12">
-              <h2>Create Brain Test</h2>
-              <form>
-              <FormGroup controlId="create" bsSize="large">
-                        <ControlLabel>Brain Name</ControlLabel>
-                        <FormControl
-                            value={this.state.brainName}
-                            onChange={this.handleInputChange}
-                            type="text"
-                            name="brainName"
-                            />
-                    </FormGroup>
-                    <FormGroup controlId="create" bsSize="large">
-                        <ControlLabel>Input</ControlLabel>
-                        <FormControl
-                            value={this.state.input}
-                            onChange={this.handleInputChange}
-                            type="text"
-                            name="input"
-                            />
-                    </FormGroup>
-                    <FormGroup controlId="create" bsSize="large">
-                        <ControlLabel>Classification</ControlLabel>
-                        <FormControl
-                            value={this.state.output}
-                            onChange={this.handleInputChange}
-                            type="text"
-                            name="output"
-                            />
-                    </FormGroup>
-                    <Button
-                      bsSize="sm"
-                      className="btn btn-primary"
-                      onClick={this.trainBrain}
-                      >
-                      Train Brain
-                      </Button>
-                    <Button
-                        
-                        id="createBtn"
-                        bsSize="sm"
-                        className="btn btn-primary"
-                        onClick={this.createBrain}
-                        >
-                        Create Brain
-                    </Button>
-              </form>
-
               <h2>Last Record Added/Updated:</h2>
               <p>Id: {this.state.lastRecord.id}</p>
               <p>Input: {this.state.lastRecord.input}</p>

@@ -16,7 +16,8 @@ class UserBrainTrain extends Component {
     currentUserId: "",
     currentUserBrain: {},
     url: '/braintrain/',
-    testResponseResults: []
+    testResponseResults: [],
+    displayResult: false
   }
 
   componentDidMount = () => {
@@ -80,7 +81,8 @@ class UserBrainTrain extends Component {
         .then(res => {
           console.log(res.data.allResults)
           this.setState({
-            testResponseResults: [...res.data.allResults]
+            testResponseResults: [...res.data.allResults],
+            displayResult: true
           })
         })
     }
@@ -189,7 +191,7 @@ class UserBrainTrain extends Component {
                 <button type="submit"
                   className="btn btn-primary"
                   onClick={this.handleTrainSubmit}
-                  disabled={this.state.userAdded.length == 0}>
+                  disabled={this.state.userAdded.length == 0 }>
                   Train
                 </button>
               </form>
@@ -211,17 +213,27 @@ class UserBrainTrain extends Component {
               />
             </div>
             <div className="col-md-6">
-              <h4>Top Results</h4>
-              <ul>
+            {this.state.displayResult ? (
+              <ul className="list-group mr-2">
+                <div className="list-group-item list-group-item-action flex-column align-items-start">
+                  <div className="d-flex w-100 justify-content-between">
+                    <h4 className="mb-1 lead">Top Results</h4>
+                  </div>  
+                </div>
                 {this.state.testResponseResults.map(function(result, idx){
-                    return <li key={ idx }>{result.label} - {result.confidence}</li>;
+                    let conf = Math.round(result.confidence * 10000) / 100 
+                    return <li className="list-group-item d-flex justify-content-between align-items-center"
+                     key={ idx }>{result.label}<span className="badge badge-primary badge-pill">{conf}%</span>
+                     </li>; 
                   })}
-            </ul>
+            </ul>) : (
+              <p className="lead">No Results</p>
+              )}
             </div>
             <button type="submit"
               className="btn btn-primary"
               onClick={this.handleTestSubmit}
-              disabled={!(this.state.userTestInput)}>
+              disabled={!(this.state.userTestInput) }>
               Submit
                 </button>
           </div>
