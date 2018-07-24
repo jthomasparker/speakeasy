@@ -171,11 +171,11 @@ class UserBrainTrain extends Component {
                 disabled={!(this.state.userInput) || !(this.state.userClassification)}>
                 Stage Training Data
                 </button>
-              <button type="submit"
+              {/* <button type="submit"
                 className="btn btn-primary"
                 onClick={this.getstate}>
                 Get State
-                </button>
+                </button> */}
             </div>
             <div className="col-md-4">
               <h4>Added</h4>
