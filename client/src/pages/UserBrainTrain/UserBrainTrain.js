@@ -14,8 +14,9 @@ class UserBrainTrain extends Component {
     userTestInput: "",
     userBrains: [{name: "Test", id: "1"}, {name: "Test2", id: "2"}],
     currentUserId: "",
-    currentUserBrain: "",
-    url: '/braintrain/'
+    currentUserBrain: {},
+    url: '/braintrain/',
+    testResponseResults: []
   }
 
   componentDidMount = () => {
@@ -25,21 +26,22 @@ class UserBrainTrain extends Component {
             console.log(res)
             if(res.data.urlPath !== '/braintrain/'){
                 this.setState({
-                    url: res.data.urlPath
+                    url: res.data.urlPath                    
                 })
                 window.location = this.state.url
             } else {
               API.loadNets().then(res => {
                 console.log("nets? " + JSON.stringify(res))
                 this.setState({
-                  userBrains: [...res.data.nets]
+                  userBrains: [...res.data.nets]                  
                 })
                 //console.log(this.state.userBrains)
               });
-            }
-            
+              this.setState({
+                currentUserId : res.data.userData.user.userId
+              })
+            }            
         });
-        
 
         let height = 300; // Only simluated here!
 
@@ -58,100 +60,51 @@ class UserBrainTrain extends Component {
   handleDataStage = event => {
     this.setState({
       userAdded: [...this.state.userAdded,
-      { input: this.state.userInput, classification: this.state.userClassification }]
+      { input: this.state.userInput, output: this.state.userClassification }],
+      userInput : "",
+      userClassification : ""
     });
-
   }
 
   getstate = event => {
     console.log(this.state);
   }
 
-  toggleCheckBoxes = event => {
-    const { value, checked } = event.target
-    const updatedMoods = [...this.state.moods]
-    const indexForUpdate = this.state.moods.findIndex((mood) => {
-      return mood.value === value
-    })
-    updatedMoods[indexForUpdate].checked = !updatedMoods[indexForUpdate].checked;
-
-    this.setState({
-      moods: updatedMoods
-    })
-    console.log(this.state)
-
-  }
-
-  handleFormSubmit = event => {
+  handleTestSubmit = event => {
     event.preventDefault();
-    if (this.state.userInput) {
-      API.getSentiment({
-        userInput: this.state.userInput
+    if (this.state.userTestInput) {
+      API.getResult({
+        userInput: this.state.userTestInput,
+        netId: this.state.currentUserBrain.id
       })
         .then(res => {
-          console.log(res)
-          let sentiment = Math.round(res.data.neuralNetRating * 100)
+          console.log(res.data.allResults)
           this.setState({
-            sentimentValue: sentiment
+            testResponseResults: [...res.data.allResults]
           })
         })
     }
   }
 
   handleTrainSubmit = event => {
-    event.preventDefault();
-    let moodsToInclude = this.state.moods.filter(moodObj => moodObj.checked)
-    API.trainSentiment({
-      input: this.state.userInput,
-      sentiment: this.state.sentimentValue,
-      moods: moodsToInclude,
-      trained: false
+    event.preventDefault(); 
+    let trainData =    
+    API.trainNet({      
+      trainingData : this.state.userAdded,
+      netId: this.state.currentUserBrain.id
     })
       .then(res => {
-        console.log(res)
-        let moods = res.data.moods.map(mood => mood.value)
+        console.log(res)        
         this.setState({
-          userInput: "",
-          sentimentValue: 0,
-          moods: [
-            {
-              value: "happy",
-              checked: false
-            },
-            {
-              value: "sad",
-              checked: false
-            },
-            {
-              value: "irritated",
-              checked: false
-            },
-            {
-              value: "excited",
-              checked: false
-            },
-            {
-              value: "angry",
-              checked: false
-            },
-            {
-              value: "grateful",
-              checked: false
-            },
-            {
-              value: "nuetral",
-              checked: false
-            }
-          ]
+          userAdded: []          
         })
       })
   }
 
-
   onDeleteRow = row => {
     let toAdd = [];
     toAdd = this.state.userAdded.filter((data) => {
-      return data.input !== row[0] && data.classification !== row[1];
+      return data.input !== row[0] && data.output !== row[1];
     });
 
     this.setState({
@@ -161,7 +114,8 @@ class UserBrainTrain extends Component {
 
   handleItemClick = (event) => {
     const { name, value } = event.target
-    console.log(name, value)
+    console.log(name, value);
+    this.setState({currentUserBrain : {name : name, id : value}});
 }
   
   render() {
@@ -185,7 +139,7 @@ class UserBrainTrain extends Component {
             <CreateBrainModal />     
         </div>
           <div className="row">
-            <h2>Train Your Brain</h2>
+            <h2>Train Your {this.state.currentUserBrain.name} Brain</h2>
           </div>
           <div className="row">
             <div className="col-md-5">
@@ -217,25 +171,25 @@ class UserBrainTrain extends Component {
                 disabled={!(this.state.userInput) || !(this.state.userClassification)}>
                 Stage Training Data
                 </button>
-              {/* <button type="submit"
+              <button type="submit"
                 className="btn btn-primary"
                 onClick={this.getstate}>
                 Get State
-                </button> */}
+                </button>
             </div>
             <div className="col-md-4">
               <h4>Added</h4>
               <BootstrapTable maxHeight={this.state.tableHeight} data={this.state.userAdded} deleteRow={true} selectRow={selectRowProp}
                 options={options} striped hover version='4'>
                 <TableHeaderColumn isKey dataField='input'>Input</TableHeaderColumn>
-                <TableHeaderColumn dataField='classification'>Classification</TableHeaderColumn>
+                <TableHeaderColumn dataField='output'>Classification</TableHeaderColumn>
               </BootstrapTable>
               <br />
               <form>
                 <button type="submit"
                   className="btn btn-primary"
                   onClick={this.handleTrainSubmit}
-                  disabled={!(this.state.userInput)}>
+                  disabled={this.state.userAdded.length == 0}>
                   Train
                 </button>
               </form>
@@ -253,11 +207,16 @@ class UserBrainTrain extends Component {
                 name="userTestInput"
                 rows="3"
                 value={this.state.userTestInput}
-                onChange={this.handleTestInputChange}
+                onChange={this.handleInputChange}
               />
             </div>
             <div className="col-md-6">
-              <h4>Classification</h4>
+              <h4>Top Results</h4>
+              <ul>
+                {this.state.testResponseResults.map(function(result, idx){
+                    return <li key={ idx }>{result.label} - {result.confidence}</li>;
+                  })}
+            </ul>
             </div>
             <button type="submit"
               className="btn btn-primary"
@@ -266,6 +225,8 @@ class UserBrainTrain extends Component {
               Submit
                 </button>
           </div>
+          <div> <p>If you're a developer, your API key is {this.state.currentUserId}.</p><p> An example of your API call would be https://jaz-speakeasy.herokuapp.com/api/public/?apikey={this.state.currentUserId}&q=[query]
+           </p> </div>
         </div>
       </div>
     );
