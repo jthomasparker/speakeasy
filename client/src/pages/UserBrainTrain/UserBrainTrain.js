@@ -158,6 +158,11 @@ class UserBrainTrain extends Component {
       userAdded: toAdd
     });
   }
+
+  handleItemClick = (event) => {
+    const { name, value } = event.target
+    console.log(name, value)
+}
   
   render() {
 
@@ -173,7 +178,8 @@ class UserBrainTrain extends Component {
 
     return (
       <div className="App">
-        <NavBar />
+        <NavBar 
+        handleItemClick={this.handleItemClick}/>
         <div className="container">
         <div className="row center">        
             <CreateBrainModal />     

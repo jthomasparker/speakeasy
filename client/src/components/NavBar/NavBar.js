@@ -30,6 +30,8 @@ class BrainDropdown extends React.Component {
         
     }
 
+
+
     render() {
         if(this.state.userBrains.length > 0){
             return(<UserBrainsDropdown>
@@ -38,6 +40,8 @@ class BrainDropdown extends React.Component {
                         <UserBrainItem
                         name={brain.netName}
                         key={brain.netId}
+                        handleItemClick={this.props.handleItemClick}
+                        value={brain.netId}
                         />
                     );
                 })}
@@ -106,7 +110,9 @@ class NavBar extends React.Component {
                                     <NavLink to="/analyzer/">Analyzer</NavLink>
                                 </NavItem>
                                 <NavItem>
-                                    <BrainDropdown userBrains={this.state.userBrains}/>
+                                    <BrainDropdown 
+                                    userBrains={this.state.userBrains}
+                                    handleItemClick={this.props.handleItemClick}/>
                                 </NavItem>
                                 <NavItem>
                                     <NavLink to="/trainer/">Our Brain</NavLink>
