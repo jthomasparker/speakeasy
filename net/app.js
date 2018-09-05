@@ -149,66 +149,6 @@ module.exports = {
 
         res.json(allResults)
 
-        
-      /*  moodClassifer.restore('./net/trainedNets/moodClassifier.json')
-        customClassifier.restore('./net/trainedNets/customSentiment.json')
-        let userInput = req.body.userInput
-        let netSentiment;
-        let adjustedNetSentiment;
-        let sentimentNpm;
-        let sum = 0
-        let resultsArr = 
-        netFiles.map(filePath => {
-            let classifier = new AsyncClassifier()
-            classifier.restore(filePath)
-            let result = classifier.getTopResult(userInput)
-            sum += result.confidence
-            return result
-        })
-        console.log(resultsArr)
-        let amazonResult = 
-            amazonNetFiles.map(filePath => {
-                let classifier = new AsyncClassifier()
-                classifier.restore(filePath)
-                let result = classifier.getTopResult(userInput)
-                return result
-            })
-            console.log("amazonResult\n", amazonResult)
-        // sort the resultsArr to get min/max
-        let sortedResults = resultsArr.sort((a, b) => {
-            return b.confidence - a.confidence
-        })
-        // average of total
-        netSentiment = sum / netFiles.length
-
-        // subtract min/max from sum
-        sum -= sortedResults[0].confidence
-        sum -= sortedResults[14].confidence
-
-        // average of total minus lowest and highest values
-        adjustedNetSentiment = sum / (netFiles.length - 2)
-        console.log(netSentiment, adjustedNetSentiment)
-
-        // get sentiment from sentiment npm for comparison
-        sentimentResult = sentiment.analyze(userInput)
-        console.log(sentimentResult)
-        sentimentNpm = (sentimentResult.comparative + 5) / 10
-
-        // get the mood
-        let moods = moodClassifer.getResult(userInput)
-        // get the custom sentiment
-        let customSentiment = customClassifier.getTopResult(userInput)
-        let sentimentData = {
-            neuralNetRating: netSentiment,
-            adjustedNetRating: adjustedNetSentiment,
-            sentimentNpmRating: sentimentNpm,
-            customSentiment: customSentiment.confidence,
-            moods: moods,
-            allResults: resultsArr,
-            amazonResults: amazonResult
-        }
-        console.log(sentimentData)
-        res.json(sentimentData) */
     }
 
 }

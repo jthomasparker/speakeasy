@@ -5,14 +5,6 @@ const jwtExp = require('express-jwt')
 
 module.exports = {
     create: (req, res) => {
-      //  console.log(req.body)
-   /*   db.User.findOne({ username: req.body.username })
-        .then(user => {
-            if(user){
-                res.json({
-                    status: 'Username already exists!'
-                })
-            })*/
         bcrypt.genSalt(10, (err, salt) => {
             if (err) {
                 res.json({
@@ -26,8 +18,6 @@ module.exports = {
                         password: hash
                     })
                     .then(user => {
-                      //  console.log(result)
-                      //  res.redirect('/auth/login')
                         res.json({
                             username: user.username,
                             userId: user._id
@@ -68,8 +58,6 @@ module.exports = {
                                 secure: process.env.NODE_ENV === 'development',
                                 signed: true
                             })
-                          //  res.redirect('/braintrain/' + user._id)
-
                             res.json({
                                 username: user.username,
                                 userId: user._id
